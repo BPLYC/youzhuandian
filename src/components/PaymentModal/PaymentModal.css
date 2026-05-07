@@ -1,0 +1,353 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-sheet {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  border: 1px solid var(--border-subtle);
+  border-bottom: none;
+  padding: var(--space-md) var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+}
+
+.modal-sheet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #946CE6, #FF6B35); /* 爱发电品牌色渐变 */
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.modal-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border-subtle);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-sm);
+}
+
+.modal-header {
+  text-align: center;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.modal-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+
+/* ===== 方案卡片 ===== */
+.plan-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.plan-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color var(--transition-fast);
+}
+
+.plan-card--monthly {
+  border-color: rgba(148, 108, 230, 0.4);
+  background: rgba(148, 108, 230, 0.06);
+}
+
+.plan-card--count {
+  border-color: rgba(0, 212, 170, 0.3);
+  background: rgba(0, 212, 170, 0.04);
+}
+
+.plan-card-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #946CE6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.plan-card-icon { font-size: 24px; }
+
+.plan-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.plan-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.plan-card--monthly .plan-price-currency,
+.plan-card--monthly .plan-price-amount {
+  color: #946CE6;
+}
+.plan-card--count .plan-price-currency,
+.plan-card--count .plan-price-amount {
+  color: var(--accent-green);
+}
+
+.plan-price-currency { font-size: 14px; font-weight: 700; }
+.plan-price-amount   { font-size: 28px; font-weight: 900; font-family: var(--font-mono); line-height: 1; }
+.plan-price-unit     { font-size: 12px; color: var(--text-muted); margin-left: 2px; }
+
+.plan-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: left;
+  width: 100%;
+}
+
+
+/* ===== 爱发电步骤 ===== */
+.afdian-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-card-hover);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.afdian-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.afdian-step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #946CE6;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* ===== 按钮 ===== */
+.btn-afdian {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: #946CE6; /* 爱发电紫 */
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 12px rgba(148, 108, 230, 0.3);
+}
+
+.btn-afdian:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(148, 108, 230, 0.4);
+}
+
+.btn-already-paid {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-already-paid:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.btn-pay {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+  color: var(--bg-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.btn-pay:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+}
+
+/* ===== 验证步骤 ===== */
+.verify-guide {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-card);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+}
+
+.verify-guide-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.verify-guide-icon {
+  font-size: 16px;
+}
+
+.order-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-input {
+  width: 100%;
+  padding: 14px;
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.order-input:focus {
+  border-color: #946CE6;
+  box-shadow: 0 0 0 2px rgba(148, 108, 230, 0.2);
+}
+
+.error-msg {
+  color: var(--accent-amber);
+  font-size: 12px;
+}
+
+/* ===== 状态 ===== */
+.payment-polling {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.polling-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-subtle);
+  border-top-color: #946CE6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.payment-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-green);
+}
+
+.success-icon { font-size: 56px; }
+.payment-note { font-size: 13px; font-weight: normal; color: var(--text-muted); }
+
+/* ===== 底部声明 ===== */
+.payment-disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-subtle);
+}

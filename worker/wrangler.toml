@@ -1,0 +1,15 @@
+name = "ev-calc-worker"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "ORDERS_KV"
+id = "f61ed85f4d084169bc8d2258d853154b"
+
+# 环境变量（非密钥类）
+[vars]
+AFDIAN_USER_ID = "ecc168343df711f18e9352540025c377"
+FRONTEND_ORIGIN = "https://youzhuandian.pages.dev"
+
+# 密钥（通过 wrangler secret put AFDIAN_TOKEN 设置，不写在这里）
+# wrangler secret put AFDIAN_TOKEN

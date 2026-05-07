@@ -1,0 +1,317 @@
+.input-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-md);
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== 步骤指示器 ===== */
+.steps-indicator {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) 0;
+}
+
+.steps-line {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: var(--border-subtle);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.steps-line-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+  transition: width var(--transition-slow);
+  border-radius: var(--radius-full);
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+  z-index: 1;
+}
+
+.step-item.done {
+  cursor: pointer;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border-subtle);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all var(--transition-base);
+}
+
+.step-item.active .step-circle {
+  border-color: var(--accent-green);
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.1);
+  animation: pulse-green 2s infinite;
+}
+
+.step-item.done .step-circle {
+  border-color: var(--accent-green);
+  background: var(--accent-green);
+  color: var(--bg-primary);
+}
+
+.step-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.step-item.active .step-label {
+  color: var(--accent-green);
+}
+
+.step-item.done .step-label {
+  color: var(--text-secondary);
+}
+
+/* ===== 步骤卡片 ===== */
+.step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.step-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.step-icon {
+  font-size: 32px;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 170, 0.3));
+}
+
+.step-card-header h2 {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.step-card-header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ===== 字段组 ===== */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.field-value-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-card-hover);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px 2px 2px;
+  border: 1px solid var(--border-subtle);
+}
+
+.field-value-box input[type="number"] {
+  width: 70px;
+  text-align: right;
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-green);
+  box-shadow: none;
+}
+
+.field-value-box input[type="number"]:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.field-unit {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  padding-left: 2px;
+}
+
+/* ===== 滑动条包装 ===== */
+.slider-track-wrapper {
+  position: relative;
+}
+
+.slider-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+  border-radius: var(--radius-full);
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slider-track-wrapper input[type="range"] {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+/* ===== Toggle 按钮 ===== */
+.toggle-group {
+  display: flex;
+  gap: var(--space-sm);
+  background: var(--bg-card-hover);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.toggle-btn.active {
+  background: var(--accent-green);
+  color: var(--bg-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 212, 170, 0.3);
+}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.btn-secondary {
+  flex: 0 0 auto;
+  padding: 14px 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  color: var(--bg-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: 0.02em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow-green);
+}
+
+.btn-calculate {
+  flex: 1;
+  padding: 16px 24px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #00D4AA, #4FACFE);
+  color: #0A0F1E;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: pulse-green 2s infinite;
+}
+
+.btn-calculate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+  animation: none;
+}
+
+.btn-calculate-icon {
+  font-size: 20px;
+}

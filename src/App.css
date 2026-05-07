@@ -1,0 +1,140 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  /* 背景网格纹理 */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 212, 170, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 10%, rgba(79, 172, 254, 0.04) 0%, transparent 60%);
+}
+
+/* ===== 顶部导航 ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.header-inner {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 14px var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 170, 0.5));
+}
+
+.logo-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.header-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--accent-green-border);
+  border-radius: var(--radius-full);
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.header-btn:hover {
+  background: var(--accent-green);
+  color: var(--bg-primary);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.member-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+/* 次数包徽章 —— 蓝绿色 */
+.count-badge {
+  color: var(--accent-green);
+  background: rgba(0, 212, 170, 0.1);
+  border-color: rgba(0, 212, 170, 0.25);
+}
+
+/* ===== Hero 标语 ===== */
+.hero-tagline {
+  text-align: center;
+  padding: var(--space-xl) var(--space-md) var(--space-md);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.hero-tagline h1 {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.hero-tagline p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.free-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(79, 172, 254, 0.15));
+  border: 1px solid var(--accent-green-border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-green);
+  animation: pulse-green 2.5s infinite;
+}
+
+/* ===== 主内容 ===== */
+.app-main {
+  flex: 1;
+  padding-bottom: var(--space-xl);
+}
+
+/* ===== 底部 ===== */
+.app-footer {
+  text-align: center;
+  padding: var(--space-md);
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+}
