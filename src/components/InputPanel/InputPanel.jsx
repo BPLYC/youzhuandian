@@ -49,6 +49,7 @@ function ToggleField({ label, value, onChange, options }) {
         {options.map(opt => (
           <button
             key={opt.value}
+            type="button"
             id={`toggle-${opt.value}`}
             className={`toggle-btn ${value === opt.value ? 'active' : ''}`}
             onClick={() => onChange(opt.value)}
@@ -126,7 +127,7 @@ export default function InputPanel({ onCalculate }) {
         {step === 0 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">🚗</span>
+              <span className="step-icon">车况</span>
               <div>
                 <h2>您的用车习惯</h2>
                 <p>告诉我您平时怎么开车</p>
@@ -172,7 +173,7 @@ export default function InputPanel({ onCalculate }) {
         {step === 1 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">⚡</span>
+              <span className="step-icon">电价</span>
               <div>
                 <h2>能源价格</h2>
                 <p>选择城市自动填入参考价格</p>
@@ -239,7 +240,7 @@ export default function InputPanel({ onCalculate }) {
         {step === 2 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">💰</span>
+              <span className="step-icon">车价</span>
               <div>
                 <h2>购车参数</h2>
                 <p>填入您关注的车型价格</p>
@@ -309,28 +310,31 @@ export default function InputPanel({ onCalculate }) {
         {step > 0 && (
           <button
             id="btn-prev"
+            type="button"
             className="btn-secondary"
             onClick={() => setStep(s => s - 1)}
           >
-            ← 上一步
+            上一步
           </button>
         )}
         {canNext && (
           <button
             id="btn-next"
+            type="button"
             className="btn-primary"
             onClick={() => setStep(s => s + 1)}
           >
-            下一步 →
+            下一步
           </button>
         )}
         {isLast && (
           <button
             id="btn-calculate"
+            type="button"
             className="btn-calculate"
             onClick={handleSubmit}
           >
-            <span className="btn-calculate-icon">⚡</span>
+            <span className="btn-calculate-icon">算</span>
             立即计算回本年数
           </button>
         )}

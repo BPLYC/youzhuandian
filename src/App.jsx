@@ -11,22 +11,19 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const [pendingParams, setPendingParams] = useState(null);
-  const [syncing, setSyncing] = useState(false);
 
-  const { canCalculateFree, canCalculatePaid, needsPayment, markFreeUsed, recordCalculation, verifyAfdianOrder, isMember, hasCountPack, getMemberExpiry, getCountRemaining, importSession, exportSession } = useUsageTracker();
+  const { canCalculateFree, canCalculatePaid, markFreeUsed, recordCalculation, verifyAfdianOrder, isMember, hasCountPack, getMemberExpiry, getCountRemaining, importSession } = useUsageTracker();
 
   // 检查 URL 中的 sync token 并自动同步
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('sync');
     if (token) {
-      setSyncing(true);
       importSession(token).then((res) => {
-        setSyncing(false);
         if (res.ok) {
-          alert('✅ 跨设备会员/次数状态同步成功！');
+          alert('跨设备会员/次数状态同步成功！');
         } else {
-          alert(`❌ 同步失败: ${res.msg}`);
+          alert(`同步失败: ${res.msg}`);
         }
         // 清理 URL，移除 token 参数
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -54,7 +51,7 @@ export default function App() {
     }
   };
 
-  const handlePaymentSuccess = (expiresAt) => {
+  const handlePaymentSuccess = () => {
     setShowPayment(false);
     if (pendingParams) {
       recordCalculation();
@@ -76,7 +73,7 @@ export default function App() {
       <header className="app-header">
         <div className="header-inner">
           <div className="header-logo">
-            <span className="logo-icon">⚡</span>
+            <span className="logo-mark">EV</span>
             <span className="logo-text">油换电计算器</span>
           </div>
           <div className="header-right">
@@ -85,18 +82,19 @@ export default function App() {
               const month = expiry ? `${expiry.getMonth()+1}月${expiry.getDate()}日` : '';
               return (
                 <span className="member-badge" title={`会员有效至 ${expiry?.toLocaleDateString('zh-CN')}`}>
-                  ⭐ 会员至{month}
+                  会员至{month}
                 </span>
               );
             })()}
           {!isMember() && hasCountPack() && (
-            <span className="member-badge count-badge" title="次数包副余次数">
-              🔢 剩{getCountRemaining()}次
+            <span className="member-badge count-badge" title="次数包剩余次数">
+              剩{getCountRemaining()}次
             </span>
           )}
             {screen === 'result' && (
               <button
                 id="header-recalc-btn"
+                type="button"
                 className="header-btn"
                 onClick={handleRecalculate}
               >
@@ -113,9 +111,15 @@ export default function App() {
           <div className="animate-fade-in-up">
             {/* Hero 标语 */}
             <div className="hero-tagline">
+              <div className="hero-kicker">算一笔换车账</div>
               <h1>买电车到底划不划算？</h1>
               <p>输入您的用车信息，精准算出回本年数</p>
-              <div className="free-badge">🎁 首次计算免费</div>
+              <div className="hero-proof-row" aria-label="计算结果包含">
+                <span>回本年数</span>
+                <span>年度节省</span>
+                <span>十年账本</span>
+              </div>
+              <div className="free-badge">首次计算免费</div>
             </div>
             <InputPanel onCalculate={handleCalculate} />
           </div>

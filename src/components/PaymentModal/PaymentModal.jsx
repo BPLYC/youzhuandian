@@ -52,13 +52,13 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
         <div className="modal-handle" />
 
         {/* 关闭按钮 */}
-        <button id="modal-close" className="modal-close-btn" onClick={onClose}>✕</button>
+        <button id="modal-close" type="button" className="modal-close-btn" onClick={onClose}>×</button>
 
         {/* ── Step: intro ── */}
         {step === 'intro' && (
           <>
             <div className="modal-header">
-              <h3>🎯 解锁更多次计算</h3>
+              <h3>解锁更多次计算</h3>
               <p>首次免费已使用，选择一个方案继续</p>
             </div>
 
@@ -67,7 +67,7 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
               {/* 月会员 */}
               <div className="plan-card plan-card--monthly">
                 <div className="plan-card-badge">推荐</div>
-                <div className="plan-card-icon">⭐</div>
+                <div className="plan-card-icon">30天</div>
                 <div className="plan-card-name">月度会员</div>
                 <div className="plan-card-price">
                   <span className="plan-price-currency">¥</span>
@@ -75,15 +75,15 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
                   <span className="plan-price-unit"> / 月</span>
                 </div>
                 <ul className="plan-card-features">
-                  <li>✅ 30天内无限次计算</li>
-                  <li>✅ 完整图表 + 15年对比</li>
-                  <li>✅ 一键截图分享</li>
+                  <li>30天内无限次计算</li>
+                  <li>完整图表 + 15年对比</li>
+                  <li>一键截图分享</li>
                 </ul>
               </div>
 
               {/* 次数包 */}
               <div className="plan-card plan-card--count">
-                <div className="plan-card-icon">🔢</div>
+                <div className="plan-card-icon">3次</div>
                 <div className="plan-card-name">次数包</div>
                 <div className="plan-card-price">
                   <span className="plan-price-currency">¥</span>
@@ -91,9 +91,9 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
                   <span className="plan-price-unit"> / 3次</span>
                 </div>
                 <ul className="plan-card-features">
-                  <li>✅ 3次完整计算</li>
-                  <li>✅ 永不过期</li>
-                  <li>✅ 适合偶尔使用</li>
+                  <li>3次完整计算</li>
+                  <li>永不过期</li>
+                  <li>适合偶尔使用</li>
                 </ul>
               </div>
             </div>
@@ -113,12 +113,13 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
               </div>
             </div>
 
-            <button id="btn-go-afdian" className="btn-afdian" onClick={handleGoAfdian}>
-              <span>前往爱发电选择方案 →</span>
+            <button id="btn-go-afdian" type="button" className="btn-afdian" onClick={handleGoAfdian}>
+              <span>前往爱发电选择方案</span>
             </button>
 
             <button
               id="btn-already-paid"
+              type="button"
               className="btn-already-paid"
               onClick={() => setStep('verify')}
             >
@@ -135,17 +136,17 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
         {step === 'verify' && (
           <>
             <div className="modal-header">
-              <h3>📋 输入爱发电订单号</h3>
+              <h3>输入爱发电订单号</h3>
               <p>在爱发电「我的订单」中查看订单号</p>
             </div>
 
             <div className="verify-guide">
               <div className="verify-guide-item">
-                <span className="verify-guide-icon">📱</span>
+                <span className="verify-guide-icon">1</span>
                 <span>爱发电 App / 网页 → 右上角头像 → 我的订单</span>
               </div>
               <div className="verify-guide-item">
-                <span className="verify-guide-icon">🔢</span>
+                <span className="verify-guide-icon">2</span>
                 <span>复制订单号（格式如：afdian_xxxxxxxx）</span>
               </div>
             </div>
@@ -161,18 +162,19 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
                 onKeyDown={e => e.key === 'Enter' && handleVerify()}
                 autoFocus
               />
-              {errorMsg && <p className="error-msg">❌ {errorMsg}</p>}
+              {errorMsg && <p className="error-msg">{errorMsg}</p>}
             </div>
 
-            <button id="btn-verify" className="btn-pay" onClick={handleVerify}>
+            <button id="btn-verify" type="button" className="btn-pay" onClick={handleVerify}>
               验证并激活权益
             </button>
 
             <button
+              type="button"
               className="btn-already-paid"
               onClick={() => { setStep('intro'); setErrorMsg(''); }}
             >
-              ← 返回
+              返回
             </button>
 
             <p className="payment-disclaimer">
@@ -193,7 +195,7 @@ export default function PaymentModal({ onSuccess, onClose, verifyOrder }) {
         {/* ── Step: success ── */}
         {step === 'success' && (
           <div className="payment-success animate-fade-in">
-            <div className="success-icon">🎉</div>
+            <div className="success-icon">已激活</div>
             {activatedPlan?.type === 'monthly' ? (
               <>
                 <p>月度会员激活成功！</p>

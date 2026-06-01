@@ -36,12 +36,12 @@ export default function ResultDashboard({ result, onRecalculate }) {
         const syncUrl = `${window.location.origin}${window.location.pathname}?sync=${res.token}`;
         try {
           await navigator.clipboard.writeText(syncUrl);
-          alert('⚠️ 微信内无法直接保存高清截图。\n\n✅ 已为您生成并复制了【专属同步链接】！\n\n请在外部浏览器（如 Safari、Chrome）中粘贴访问该链接，即可继续截图并自动同步您的会员状态。');
-        } catch (err) {
-          alert(`⚠️ 微信内无法直接保存高清截图。\n\n请手动复制以下链接并在外部浏览器打开以完成截图和状态同步：\n\n${syncUrl}`);
+          alert('微信内无法直接保存高清截图。\n\n已为您生成并复制了专属同步链接。\n\n请在外部浏览器（如 Safari、Chrome）中粘贴访问该链接，即可继续截图并自动同步您的会员状态。');
+        } catch {
+          alert(`微信内无法直接保存高清截图。\n\n请手动复制以下链接并在外部浏览器打开以完成截图和状态同步：\n\n${syncUrl}`);
         }
       } else {
-        alert(`❌ 无法生成同步链接: ${res.msg}`);
+        alert(`无法生成同步链接: ${res.msg}`);
       }
       return; // 阻止在微信中继续执行后续截图代码
     }
@@ -70,7 +70,9 @@ export default function ResultDashboard({ result, onRecalculate }) {
     if (navigator.share) {
       try {
         await navigator.share({ title: '油换电回本计算器', text: shareText, url: shareUrl });
-      } catch (e) {}
+      } catch {
+        return;
+      }
     } else {
       try {
         await navigator.clipboard.writeText(shareText + '\n' + shareUrl);
@@ -83,16 +85,16 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
   const breakEvenText = formatBreakEven(breakEvenYear);
   const verdict = breakEvenYear === null
-    ? { label: '暂时不划算', color: 'amber', icon: '⚠️' }
+    ? { label: '暂时不划算', color: 'amber' }
     : breakEvenYear === 0
-    ? { label: '立即省钱', color: 'green', icon: '🎉' }
+    ? { label: '立即省钱', color: 'green' }
     : breakEvenYear <= 4
-    ? { label: '非常划算', color: 'green', icon: '🏆' }
+    ? { label: '非常划算', color: 'green' }
     : breakEvenYear <= 7
-    ? { label: '比较划算', color: 'blue', icon: '✅' }
+    ? { label: '比较划算', color: 'blue' }
     : breakEvenYear <= 10
-    ? { label: '勉强回本', color: 'blue', icon: '📊' }
-    : { label: '回本时间较长', color: 'amber', icon: '⏳' };
+    ? { label: '勉强回本', color: 'blue' }
+    : { label: '回本时间较长', color: 'amber' };
 
   return (
     <div className="result-wrapper">
@@ -101,10 +103,10 @@ export default function ResultDashboard({ result, onRecalculate }) {
         <div className="watermark">油车换电车划算吗？ · youzhuandian.app</div>
 
         <div className={`verdict-banner verdict-${verdict.color}`}>
-          <span className="verdict-icon">{verdict.icon}</span>
+          <span className="verdict-dot" aria-hidden="true" />
           <span className="verdict-label">{verdict.label}</span>
           {breakEvenYear !== null && breakEvenYear > 0 && (
-            <span className="verdict-sub">· {breakEvenText}开始省钱</span>
+            <span className="verdict-sub">{breakEvenText}开始省钱</span>
           )}
         </div>
 
@@ -146,7 +148,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
             <span>累计成本对比</span>
             {breakEvenYear !== null && breakEvenYear > 0 && breakEvenYear <= 15 && (
               <span className="chart-breakeven-badge">
-                💡 {Math.round(breakEvenYear)}年交叉
+                {Math.round(breakEvenYear)}年交叉
               </span>
             )}
           </div>
@@ -155,15 +157,15 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
         <div className="energy-compare">
           <div className="energy-item fuel">
-            <span className="energy-icon">⛽</span>
+            <span className="energy-icon">油</span>
             <div>
               <div className="energy-label">油车年油费</div>
               <div className="energy-value">{formatMoney(annualFuelCost)}</div>
             </div>
           </div>
-          <div className="energy-arrow">→</div>
+          <div className="energy-arrow">vs</div>
           <div className="energy-item ev">
-            <span className="energy-icon">🔋</span>
+            <span className="energy-icon">电</span>
             <div>
               <div className="energy-label">电车年电费</div>
               <div className="energy-value text-green">{formatMoney(annualElecCost)}</div>
@@ -208,14 +210,14 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
       {/* 操作按钮（不截图） */}
       <div className="result-actions">
-        <button id="btn-screenshot" className="action-btn action-screenshot" onClick={handleScreenshot} disabled={syncing}>
-          <span>📸</span> {syncing ? '处理中...' : '截图保存'}
+        <button id="btn-screenshot" type="button" className="action-btn action-screenshot" onClick={handleScreenshot} disabled={syncing}>
+          <span>存</span> {syncing ? '处理中...' : '截图保存'}
         </button>
-        <button id="btn-share" className="action-btn action-share" onClick={handleShare}>
-          <span>🔗</span> 分享给朋友
+        <button id="btn-share" type="button" className="action-btn action-share" onClick={handleShare}>
+          <span>享</span> 分享给朋友
         </button>
-        <button id="btn-recalculate" className="action-btn action-recalculate" onClick={onRecalculate}>
-          <span>🔄</span> 重新计算
+        <button id="btn-recalculate" type="button" className="action-btn action-recalculate" onClick={onRecalculate}>
+          <span>算</span> 重新计算
         </button>
       </div>
     </div>

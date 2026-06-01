@@ -1,5 +1,5 @@
 /**
- * 核心计算逻辑 — 油车 vs 电车成本对比
+ * 核心计算逻辑 - 油车 vs 电车成本对比
  * 全在浏览器端运行，无需服务器
  */
 
@@ -19,7 +19,7 @@ export function calcAnnualEnergy(mileage, consumptionPer100, pricePerUnit) {
 }
 
 /**
- * 主计算函数 — 返回完整对比数据
+ * 主计算函数 - 返回完整对比数据
  * @param {Object} params 用户输入参数
  * @returns {Object} 计算结果
  */
@@ -49,47 +49,20 @@ export function calculate(params) {
   const annualElecCost = calcAnnualEnergy(annualMileage, evConsumption, elecPrice);
 
   const annualEnergySaving = annualFuelCost - annualElecCost; // 年节省能源费（正=节省）
-  const annualInsuranceDiff = insuranceDiff;                  // 正=电车贵
-  const annualMaintenanceDiff = maintenanceDiff;              // 负=电车省
-
-  // 电车年度运营总变化（相对油车）
-  const annualOperationSaving = annualEnergySaving - annualInsuranceDiff - annualMaintenanceDiff;
-  // 上式：节省能源 - 多付保险 - 少付维保（maintenanceDiff是负数，所以减负等于加）
-  // 即：能源节省 + 维保节省 - 保险多付
 
   const annualNetSaving = annualEnergySaving
     + Math.abs(maintenanceDiff) * (maintenanceDiff < 0 ? 1 : -1)
     - insuranceDiff;
 
   // ===== 回本年数 =====
-  // 初始多投入 purchaseDiff 元
-  // 每年节省 annualNetSaving 元
-  let breakEvenYear = null;
-  if (annualNetSaving > 0 && purchaseDiff > 0) {
-    breakEvenYear = purchaseDiff / annualNetSaving;
-  } else if (purchaseDiff <= 0) {
-    // 电车便宜或同价，第一天就省
-    breakEvenYear = 0;
-  }
-  // annualNetSaving <= 0：换车不省钱
+  // 通过 15 年累计数据和线性插值推导精确回本点。
 
   // ===== 多年累计对比（15年） =====
   // 油车累计：购车总价 + y年 * 年油费
   // 电车累计：购车总价 + y年 * (年电费 + 保险差额 + 维保差额)
-  // evExtra = insuranceDiff + maintenanceDiff（正=电贵，负=电省）
-  const years = 15;
-  const evExtra = insuranceDiff + maintenanceDiff;
   const yearlyDataClean = [];
+  const years = 15;
   for (let y = 0; y <= years; y++) {
-    // 油车累计：购车 + y年能源 + y年保险（基准0）+ y年维保（基准0）
-    // 电车累计：购车+充电桩 + y年电费 + y年多付保险 + y年少付维保
-    const fuelTotal = fuelTotalPurchase + y * annualFuelCost;
-    const evTotal = evTotalPurchase
-      + y * annualElecCost
-      + y * Math.max(0, insuranceDiff)           // 电车多付的保险
-      - y * Math.abs(Math.min(0, maintenanceDiff)); // 但电车维保省的（maintenanceDiff是负数时省钱）
-
-    // 修正：maintenanceDiff 负值表示电车省，正值表示电车贵
     // 电车年运营 = 电费 + (保险基础费+insuranceDiff) + (维保基础+maintenanceDiff)
     // 对比油车差值 = insuranceDiff + maintenanceDiff（正=电贵，负=电省）
     const evExtra = insuranceDiff + maintenanceDiff; // 电车相对油车运营额外支出/节省
