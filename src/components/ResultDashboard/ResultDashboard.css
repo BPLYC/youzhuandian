@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: var(--space-md);
   background:
-    linear-gradient(180deg, rgba(245, 244, 235, 0.025), transparent 220px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 220px),
     var(--bg-secondary);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-xl);
@@ -31,7 +31,7 @@
   right: 0;
   height: 1px;
   background: var(--accent-green);
-  opacity: 0.72;
+  opacity: 0.58;
 }
 
 .watermark {
@@ -62,13 +62,13 @@
 
 .verdict-blue {
   background: var(--accent-blue-dim);
-  border: 1px solid rgba(139, 185, 230, 0.24);
+  border: 1px solid rgba(202, 202, 202, 0.22);
   color: var(--accent-blue);
 }
 
 .verdict-amber {
   background: var(--accent-amber-dim);
-  border: 1px solid rgba(243, 155, 84, 0.26);
+  border: 1px solid rgba(154, 154, 154, 0.24);
   color: var(--accent-amber);
 }
 
@@ -150,7 +150,7 @@
 }
 
 .stat-card {
-  background: rgba(21, 27, 23, 0.88);
+  background: rgba(17, 17, 17, 0.9);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   padding: var(--space-md) var(--space-sm);
@@ -161,7 +161,7 @@
 
 .stat-card-featured {
   background:
-    linear-gradient(180deg, rgba(57, 217, 158, 0.08), transparent),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent),
     var(--accent-green-dim);
   border-color: var(--accent-green-border);
   transform: scale(1.03);
@@ -189,7 +189,7 @@
 
 /* ===== 图表区 ===== */
 .chart-section {
-  background: rgba(21, 27, 23, 0.9);
+  background: rgba(17, 17, 17, 0.92);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   padding: var(--space-md) var(--space-sm) var(--space-sm);
@@ -209,9 +209,9 @@
 
 .chart-breakeven-badge {
   font-size: 11px;
-  background: rgba(255, 178, 77, 0.13);
-  color: #FFE2A8;
-  border: 1px solid rgba(255, 178, 77, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-full);
   padding: 2px 8px;
   white-space: nowrap;
@@ -223,7 +223,7 @@
   align-items: center;
   flex-wrap: wrap; /* 允许折行，避免小屏被挤出屏幕 */
   gap: var(--space-sm);
-  background: rgba(21, 27, 23, 0.9);
+  background: rgba(17, 17, 17, 0.92);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   padding: var(--space-md);
@@ -251,11 +251,13 @@
 .energy-item.fuel .energy-icon {
   color: var(--accent-amber);
   background: var(--accent-amber-dim);
+  border: 1px solid rgba(154, 154, 154, 0.2);
 }
 
 .energy-item.ev .energy-icon {
   color: var(--accent-green);
   background: var(--accent-green-dim);
+  border: 1px solid var(--accent-green-border);
 }
 
 .energy-label {
@@ -367,7 +369,7 @@
   padding: 12px 8px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  background: rgba(21, 27, 23, 0.94);
+  background: rgba(17, 17, 17, 0.95);
   color: var(--text-secondary);
   font-family: var(--font-sans);
   font-size: 12px;
@@ -390,7 +392,7 @@
 
 .action-screenshot:hover {
   background: var(--accent-blue-dim);
-  border-color: rgba(139, 185, 230, 0.24);
+  border-color: rgba(202, 202, 202, 0.22);
   color: var(--accent-blue);
 }
 
@@ -402,7 +404,7 @@
 
 .action-recalculate:hover {
   background: var(--accent-amber-dim);
-  border-color: rgba(243, 155, 84, 0.26);
+  border-color: rgba(154, 154, 154, 0.24);
   color: var(--accent-amber);
 }
 

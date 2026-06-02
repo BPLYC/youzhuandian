@@ -49,7 +49,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
     if (!dashboardRef.current) return;
     try {
       const canvas = await html2canvas(dashboardRef.current, {
-        backgroundColor: '#0A0F1E',
+        backgroundColor: '#050505',
         scale: 2,
         useCORS: true,
         logging: false,

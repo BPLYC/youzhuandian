@@ -1,15 +1,15 @@
 import ReactECharts from 'echarts-for-react';
 
 const COLORS = {
-  green: '#39D99E',
-  greenSoft: '#8DF0C7',
-  blue: '#8BB9E6',
-  amber: '#F39B54',
-  amberSoft: '#F7B978',
-  text: '#F5F4EB',
-  muted: '#B7B9AD',
-  panel: 'rgba(16, 21, 17, 0.96)',
-  grid: 'rgba(245, 244, 235, 0.06)',
+  green: '#F4F4EF',
+  greenSoft: '#D9D9D2',
+  blue: '#BDBDB7',
+  amber: '#8F8F8A',
+  amberSoft: '#B0B0AA',
+  text: '#F4F4EF',
+  muted: '#A6A6A0',
+  panel: 'rgba(10, 10, 10, 0.97)',
+  grid: 'rgba(255, 255, 255, 0.08)',
 };
 
 /**
@@ -31,11 +31,11 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
         coord: [`${yr}年`, Math.round((val.fuelTotal + val.evTotal) / 2)],
         symbol: 'circle',
         symbolSize: 16,
-        itemStyle: { color: '#FFE2A8' },
+        itemStyle: { color: '#FFFFFF' },
         label: {
           show: true,
           formatter: '回本点',
-          color: '#FFE2A8',
+          color: '#FFFFFF',
           fontSize: 12,
           fontWeight: 'bold',
           position: 'top',
@@ -57,7 +57,7 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
     tooltip: {
       trigger: 'axis',
       backgroundColor: COLORS.panel,
-      borderColor: 'rgba(57, 217, 158, 0.26)',
+      borderColor: 'rgba(255, 255, 255, 0.22)',
       borderWidth: 1,
       textStyle: { color: COLORS.text, fontSize: 13 },
       formatter: (params) => {
@@ -80,7 +80,7 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
     xAxis: {
       type: 'category',
       data: years,
-      axisLine: { lineStyle: { color: 'rgba(243,247,244,0.1)' } },
+      axisLine: { lineStyle: { color: 'rgba(255,255,255,0.12)' } },
       axisLabel: { color: COLORS.muted, fontSize: 11 },
       axisTick: { show: false },
     },
@@ -103,14 +103,14 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
         smooth: true,
         symbol: 'none',
         itemStyle: { color: COLORS.amber },
-        lineStyle: { color: COLORS.amber, width: 2.5 },
+        lineStyle: { color: COLORS.amber, width: 2.5, type: 'dashed' },
         areaStyle: {
           color: {
             type: 'linear',
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(243, 155, 84, 0.18)' },
-              { offset: 1, color: 'rgba(243, 155, 84, 0)' },
+              { offset: 0, color: 'rgba(180, 180, 180, 0.16)' },
+              { offset: 1, color: 'rgba(180, 180, 180, 0)' },
             ],
           },
         },
@@ -131,8 +131,8 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
             type: 'linear',
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(57, 217, 158, 0.16)' },
-              { offset: 1, color: 'rgba(57, 217, 158, 0)' },
+              { offset: 0, color: 'rgba(255, 255, 255, 0.16)' },
+              { offset: 1, color: 'rgba(255, 255, 255, 0)' },
             ],
           },
         },
@@ -171,7 +171,7 @@ export function CostPieChart({ fuelBreakdown, evBreakdown }) {
     tooltip: {
       trigger: 'item',
       backgroundColor: COLORS.panel,
-      borderColor: 'rgba(57, 217, 158, 0.26)',
+      borderColor: 'rgba(255, 255, 255, 0.22)',
       borderWidth: 1,
       textStyle: { color: COLORS.text, fontSize: 12 },
       formatter: p => `${p.name}<br/>¥${p.value.toLocaleString()} (${p.percent}%)`,
@@ -193,7 +193,7 @@ export function CostPieChart({ fuelBreakdown, evBreakdown }) {
     }],
   });
 
-  const fuelOpt = makeOption('油车年度成本', fuelBreakdown, COLORS.amber, COLORS.amberSoft, '#FFD3A3');
+  const fuelOpt = makeOption('油车年度成本', fuelBreakdown, COLORS.amber, COLORS.amberSoft, '#D0D0CA');
   const evOpt = makeOption('电车年度成本', evBreakdown, COLORS.green, COLORS.blue, COLORS.greenSoft);
 
   return (
