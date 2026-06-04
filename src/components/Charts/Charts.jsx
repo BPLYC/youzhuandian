@@ -12,29 +12,27 @@ const COLORS = {
   grid: 'rgba(255, 255, 255, 0.08)',
 };
 
-/**
- * 折线图：累计成本对比（回本交叉点）
- */
+const formatUsd = (value) => `$${Math.round(value || 0).toLocaleString('en-US')}`;
+
 export function BreakEvenChart({ yearlyData, breakEvenYear }) {
-  const years = yearlyData.map(d => `${d.year}年`);
+  const years = yearlyData.map(d => `Y${d.year}`);
   const fuelData = yearlyData.map(d => d.fuelTotal);
   const evData = yearlyData.map(d => d.evTotal);
 
-  // 标注交叉点
   const markPoints = [];
   if (breakEvenYear !== null && breakEvenYear > 0 && breakEvenYear <= 15) {
     const yr = Math.round(breakEvenYear);
     const val = yearlyData[Math.min(yr, yearlyData.length - 1)];
     if (val) {
       markPoints.push({
-        name: '回本点',
-        coord: [`${yr}年`, Math.round((val.fuelTotal + val.evTotal) / 2)],
+        name: 'Break-even',
+        coord: [`Y${yr}`, Math.round((val.fuelTotal + val.evTotal) / 2)],
         symbol: 'circle',
         symbolSize: 16,
         itemStyle: { color: '#FFFFFF' },
         label: {
           show: true,
-          formatter: '回本点',
+          formatter: 'Break-even',
           color: '#FFFFFF',
           fontSize: 12,
           fontWeight: 'bold',
@@ -61,17 +59,17 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
       borderWidth: 1,
       textStyle: { color: COLORS.text, fontSize: 13 },
       formatter: (params) => {
-        const year = params[0].name;
-        const fuel = params.find(p => p.seriesName === '油车');
-        const ev = params.find(p => p.seriesName === '电车');
+        const year = params[0].name.replace('Y', 'Year ');
+        const fuel = params.find(p => p.seriesName === 'Gas vehicle');
+        const ev = params.find(p => p.seriesName === 'EV');
         const saving = fuel && ev ? fuel.value - ev.value : 0;
         return `
           <div style="padding:4px 0">
-            <div style="font-weight:700;margin-bottom:6px">${year}累计花费</div>
-            <div style="color:${COLORS.amber}">油车: ¥${(fuel?.value || 0).toLocaleString()}</div>
-            <div style="color:${COLORS.green}">电车: ¥${(ev?.value || 0).toLocaleString()}</div>
+            <div style="font-weight:700;margin-bottom:6px">${year} ownership cost</div>
+            <div style="color:${COLORS.amber}">Gas: ${formatUsd(fuel?.value)}</div>
+            <div style="color:${COLORS.green}">EV: ${formatUsd(ev?.value)}</div>
             <div style="margin-top:6px;font-weight:700;color:${saving >= 0 ? COLORS.green : COLORS.amber}">
-              ${saving >= 0 ? `电车省了 ¥${saving.toLocaleString()}` : `电车贵了 ¥${Math.abs(saving).toLocaleString()}`}
+              ${saving >= 0 ? `EV ahead by ${formatUsd(saving)}` : `EV behind by ${formatUsd(Math.abs(saving))}`}
             </div>
           </div>
         `;
@@ -92,12 +90,12 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
       axisLabel: {
         color: COLORS.muted,
         fontSize: 11,
-        formatter: v => v >= 10000 ? `${(v / 10000).toFixed(0)}万` : v,
+        formatter: v => v >= 1000 ? `$${(v / 1000).toFixed(0)}k` : `$${v}`,
       },
     },
     series: [
       {
-        name: '油车',
+        name: 'Gas vehicle',
         type: 'line',
         data: fuelData,
         smooth: true,
@@ -119,7 +117,7 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
         },
       },
       {
-        name: '电车',
+        name: 'EV',
         type: 'line',
         data: evData,
         smooth: true,
@@ -156,11 +154,8 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
   );
 }
 
-/**
- * 饼图：年度成本构成对比
- */
 export function CostPieChart({ fuelBreakdown, evBreakdown }) {
-  const makeOption = (title, data, color1, color2, color3) => ({
+  const makeOption = (title, data, color1, color2, color3, energyLabel) => ({
     backgroundColor: 'transparent',
     title: {
       text: title,
@@ -174,16 +169,16 @@ export function CostPieChart({ fuelBreakdown, evBreakdown }) {
       borderColor: 'rgba(255, 255, 255, 0.22)',
       borderWidth: 1,
       textStyle: { color: COLORS.text, fontSize: 12 },
-      formatter: p => `${p.name}<br/>¥${p.value.toLocaleString()} (${p.percent}%)`,
+      formatter: p => `${p.name}<br/>${formatUsd(p.value)} (${p.percent}%)`,
     },
     series: [{
       type: 'pie',
       radius: ['40%', '68%'],
       center: ['50%', '58%'],
       data: [
-        { value: data.energy, name: '能源费', itemStyle: { color: color1 } },
-        { value: data.insurance, name: '保险费', itemStyle: { color: color2 } },
-        { value: data.maintenance, name: '维保费', itemStyle: { color: color3 } },
+        { value: data.energy, name: energyLabel, itemStyle: { color: color1 } },
+        { value: data.insurance, name: 'Insurance', itemStyle: { color: color2 } },
+        { value: data.maintenance, name: 'Maintenance', itemStyle: { color: color3 } },
       ],
       label: {
         show: false,
@@ -193,15 +188,15 @@ export function CostPieChart({ fuelBreakdown, evBreakdown }) {
     }],
   });
 
-  const fuelOpt = makeOption('油车年度成本', fuelBreakdown, COLORS.amber, COLORS.amberSoft, '#D0D0CA');
-  const evOpt = makeOption('电车年度成本', evBreakdown, COLORS.green, COLORS.blue, COLORS.greenSoft);
+  const fuelOpt = makeOption('Gas yearly cost', fuelBreakdown, COLORS.amber, COLORS.amberSoft, '#D0D0CA', 'Fuel');
+  const evOpt = makeOption('EV yearly cost', evBreakdown, COLORS.green, COLORS.blue, COLORS.greenSoft, 'Electricity');
 
   return (
-    <div style={{ display: 'flex', gap: '8px' }}>
-      <div style={{ flex: 1 }}>
+    <div className="cost-pie-grid">
+      <div>
         <ReactECharts option={fuelOpt} style={{ height: '180px' }} opts={{ renderer: 'canvas' }} />
       </div>
-      <div style={{ flex: 1 }}>
+      <div>
         <ReactECharts option={evOpt} style={{ height: '180px' }} opts={{ renderer: 'canvas' }} />
       </div>
     </div>

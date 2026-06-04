@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { CITY_PRICES, DEFAULT_VALUES } from '../../data/cityPrices';
+import { DEFAULT_VALUES, US_PRESETS } from '../../data/cityPrices';
 import './InputPanel.css';
 
-const STEPS = ['用车习惯', '能源价格', '购车参数'];
+const STEPS = ['Driving', 'Energy', 'Vehicle costs'];
 
 function SliderField({ label, value, min, max, step, unit, onChange, hint }) {
-  const pct = ((value - min) / (max - min)) * 100;
+  const pct = Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
   return (
     <div className="field-group">
       <div className="field-header">
@@ -48,7 +48,7 @@ function ToggleField({ label, value, onChange, options }) {
       <div className="toggle-group">
         {options.map(opt => (
           <button
-            key={opt.value}
+            key={String(opt.value)}
             type="button"
             id={`toggle-${opt.value}`}
             className={`toggle-btn ${value === opt.value ? 'active' : ''}`}
@@ -68,22 +68,22 @@ export default function InputPanel({ onCalculate }) {
 
   const set = (key) => (val) => setForm(prev => ({ ...prev, [key]: val }));
 
-  const handleCityChange = (idx) => {
-    const city = CITY_PRICES[idx];
+  const handlePresetChange = (idx) => {
+    const preset = US_PRESETS[idx];
     setForm(prev => ({
       ...prev,
-      cityIndex: idx,
-      fuelPrice: city.fuelPrice,
-      elecPrice: prev.useHomeCharger ? city.valleyElecPrice : city.avgElecPrice,
+      presetIndex: idx,
+      fuelPrice: preset.fuelPrice,
+      electricityPrice: prev.useHomeCharging ? preset.homeElectricityPrice : preset.publicChargingPrice,
     }));
   };
 
-  const handleChargerToggle = (useHome) => {
-    const city = CITY_PRICES[form.cityIndex];
+  const handleChargingToggle = (useHome) => {
+    const preset = US_PRESETS[form.presetIndex];
     setForm(prev => ({
       ...prev,
-      useHomeCharger: useHome,
-      elecPrice: useHome ? city.valleyElecPrice : city.avgElecPrice,
+      useHomeCharging: useHome,
+      electricityPrice: useHome ? preset.homeElectricityPrice : preset.publicChargingPrice,
     }));
   };
 
@@ -96,7 +96,6 @@ export default function InputPanel({ onCalculate }) {
 
   return (
     <div className="input-panel">
-      {/* 步骤指示器 */}
       <div className="steps-indicator">
         {STEPS.map((s, i) => (
           <div
@@ -121,191 +120,195 @@ export default function InputPanel({ onCalculate }) {
         </div>
       </div>
 
-      {/* 步骤内容 */}
       <div className="step-content animate-fade-in-up" key={step}>
-        {/* Step 0: 用车习惯 */}
         {step === 0 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">车况</span>
+              <span className="step-icon">Miles</span>
               <div>
-                <h2>您的用车习惯</h2>
-                <p>告诉我您平时怎么开车</p>
+                <h2>Your driving pattern</h2>
+                <p>Start with how much and how you drive.</p>
               </div>
             </div>
 
             <SliderField
-              label="年行驶里程"
+              label="Annual mileage"
               value={form.annualMileage}
               min={3000}
-              max={60000}
-              step={1000}
-              unit="km"
+              max={40000}
+              step={500}
+              unit="mi/yr"
               onChange={set('annualMileage')}
-              hint={`约每天 ${Math.round(form.annualMileage / 365)} km`}
+              hint={`About ${Math.round(form.annualMileage / 365)} miles per day`}
             />
 
             <SliderField
-              label="当前油耗"
-              value={form.fuelConsumption}
-              min={4}
-              max={18}
-              step={0.5}
-              unit="L/100km"
-              onChange={set('fuelConsumption')}
-              hint="不确定可查看行驶证或车辆参数"
+              label="Current gas mileage"
+              value={form.fuelEfficiency}
+              min={10}
+              max={60}
+              step={1}
+              unit="MPG"
+              onChange={set('fuelEfficiency')}
+              hint="Use your real-world average if you know it."
             />
 
             <ToggleField
-              label="主要用途"
+              label="Main use case"
               value={form.drivingType}
               onChange={set('drivingType')}
               options={[
-                { value: 'city', label: '城市通勤' },
-                { value: 'mixed', label: '均衡' },
-                { value: 'highway', label: '长途为主' },
+                { value: 'city', label: 'City' },
+                { value: 'mixed', label: 'Mixed' },
+                { value: 'highway', label: 'Highway' },
               ]}
             />
           </div>
         )}
 
-        {/* Step 1: 能源价格 */}
         {step === 1 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">电价</span>
+              <span className="step-icon">Rates</span>
               <div>
-                <h2>能源价格</h2>
-                <p>选择城市自动填入参考价格</p>
+                <h2>Energy prices</h2>
+                <p>Pick a preset, then fine-tune the numbers.</p>
               </div>
             </div>
 
             <div className="field-group">
-              <span className="field-label">所在城市</span>
+              <span className="field-label">State preset</span>
               <select
-                value={form.cityIndex}
-                onChange={e => handleCityChange(Number(e.target.value))}
+                value={form.presetIndex}
+                onChange={e => handlePresetChange(Number(e.target.value))}
               >
-                {CITY_PRICES.map((c, i) => (
-                  <option key={i} value={i}>{c.city}</option>
+                {US_PRESETS.map((preset, i) => (
+                  <option key={preset.label} value={i}>{preset.label}</option>
                 ))}
               </select>
             </div>
 
             <SliderField
-              label="当前油价（92号）"
+              label="Gas price"
               value={form.fuelPrice}
-              min={5}
-              max={12}
-              step={0.01}
-              unit="元/升"
+              min={2}
+              max={7}
+              step={0.05}
+              unit="$/gal"
               onChange={set('fuelPrice')}
             />
 
             <ToggleField
-              label="充电方式"
-              value={form.useHomeCharger}
-              onChange={handleChargerToggle}
+              label="Charging"
+              value={form.useHomeCharging}
+              onChange={handleChargingToggle}
               options={[
-                { value: true, label: '家用充电桩（谷电）' },
-                { value: false, label: '公共快充' },
+                { value: true, label: 'Home' },
+                { value: false, label: 'Public' },
               ]}
             />
 
             <SliderField
-              label={form.useHomeCharger ? '谷电电价' : '综合电价'}
-              value={form.elecPrice}
-              min={0.2}
-              max={1.5}
+              label={form.useHomeCharging ? 'Home electricity rate' : 'Public charging rate'}
+              value={form.electricityPrice}
+              min={0.08}
+              max={0.65}
               step={0.01}
-              unit="元/度"
-              onChange={set('elecPrice')}
-              hint={form.useHomeCharger ? '深夜充电谷电价，省钱最大化' : '公共充电桩综合价格'}
+              unit="$/kWh"
+              onChange={set('electricityPrice')}
+              hint={form.useHomeCharging ? 'Use your utility bill or time-of-use rate.' : 'Use your typical fast-charging price.'}
             />
 
             <SliderField
-              label="电车百公里电耗"
+              label="EV efficiency"
               value={form.evConsumption}
-              min={8}
-              max={30}
-              step={0.5}
-              unit="度/100km"
+              min={20}
+              max={55}
+              step={1}
+              unit="kWh/100 mi"
               onChange={set('evConsumption')}
-              hint="一般家用电车 12-20 度，可查目标车型参数"
+              hint="Most modern EVs land around 25-35 kWh per 100 miles."
             />
           </div>
         )}
 
-        {/* Step 2: 购车参数 */}
         {step === 2 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">车价</span>
+              <span className="step-icon">Cost</span>
               <div>
-                <h2>购车参数</h2>
-                <p>填入您关注的车型价格</p>
+                <h2>Vehicle costs</h2>
+                <p>Include incentives and ownership differences.</p>
               </div>
             </div>
 
             <SliderField
-              label="当前油车价格"
-              value={form.fuelCarPrice}
-              min={50000}
-              max={500000}
-              step={5000}
-              unit="元"
-              onChange={set('fuelCarPrice')}
-              hint={`+购置税 ≈ ${Math.round((form.fuelCarPrice / 1.13) * 0.1 / 100) * 100} 元`}
+              label="Gas vehicle price"
+              value={form.gasCarPrice}
+              min={10000}
+              max={90000}
+              step={1000}
+              unit="$"
+              onChange={set('gasCarPrice')}
             />
 
             <SliderField
-              label="目标电车价格（含补贴）"
+              label="EV price"
               value={form.evCarPrice}
-              min={50000}
-              max={500000}
-              step={5000}
-              unit="元"
+              min={10000}
+              max={100000}
+              step={1000}
+              unit="$"
               onChange={set('evCarPrice')}
-              hint="电车免购置税"
             />
 
             <SliderField
-              label="充电桩安装费"
+              label="EV incentives / credits"
+              value={form.evIncentives}
+              min={0}
+              max={15000}
+              step={500}
+              unit="$"
+              onChange={set('evIncentives')}
+              hint="Enter federal, state, utility, or dealer incentives you expect to qualify for."
+            />
+
+            <SliderField
+              label="Home charger install"
               value={form.chargerInstallCost}
               min={0}
-              max={10000}
-              step={500}
-              unit="元"
+              max={5000}
+              step={100}
+              unit="$"
               onChange={set('chargerInstallCost')}
-              hint="公寓无法安装可设为 0"
+              hint="Set to 0 if you will rely on public charging."
             />
 
             <SliderField
-              label="年保险差异"
+              label="Yearly insurance difference"
               value={form.insuranceDiff}
-              min={-3000}
-              max={3000}
-              step={100}
-              unit="元/年"
+              min={-1000}
+              max={2500}
+              step={50}
+              unit="$/yr"
               onChange={set('insuranceDiff')}
-              hint={form.insuranceDiff >= 0 ? `电车保险每年贵 ${form.insuranceDiff} 元` : `电车保险每年省 ${Math.abs(form.insuranceDiff)} 元`}
+              hint={form.insuranceDiff >= 0 ? `EV insurance costs about $${form.insuranceDiff} more per year.` : `EV insurance saves about $${Math.abs(form.insuranceDiff)} per year.`}
             />
 
             <SliderField
-              label="年维保差异"
+              label="Yearly maintenance difference"
               value={form.maintenanceDiff}
-              min={-8000}
-              max={2000}
-              step={100}
-              unit="元/年"
+              min={-2500}
+              max={1500}
+              step={50}
+              unit="$/yr"
               onChange={set('maintenanceDiff')}
-              hint={form.maintenanceDiff <= 0 ? `电车维保每年省 ${Math.abs(form.maintenanceDiff)} 元（无机油等）` : `电车维保每年贵 ${form.maintenanceDiff} 元`}
+              hint={form.maintenanceDiff <= 0 ? `EV maintenance saves about $${Math.abs(form.maintenanceDiff)} per year.` : `EV maintenance costs about $${form.maintenanceDiff} more per year.`}
             />
           </div>
         )}
       </div>
 
-      {/* 导航按钮 */}
       <div className="nav-buttons">
         {step > 0 && (
           <button
@@ -314,7 +317,7 @@ export default function InputPanel({ onCalculate }) {
             className="btn-secondary"
             onClick={() => setStep(s => s - 1)}
           >
-            上一步
+            Back
           </button>
         )}
         {canNext && (
@@ -324,7 +327,7 @@ export default function InputPanel({ onCalculate }) {
             className="btn-primary"
             onClick={() => setStep(s => s + 1)}
           >
-            下一步
+            Next
           </button>
         )}
         {isLast && (
@@ -334,8 +337,8 @@ export default function InputPanel({ onCalculate }) {
             className="btn-calculate"
             onClick={handleSubmit}
           >
-            <span className="btn-calculate-icon">算</span>
-            立即计算回本年数
+            <span className="btn-calculate-icon">$</span>
+            Calculate EV savings
           </button>
         )}
       </div>

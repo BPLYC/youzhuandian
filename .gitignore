@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Local AI handoff / operational notes
+/AGENTS.md
+/AI_TASK_RESUME.md
+/AI_BUG_FIX_LOG.md
+/CLOUDFLARE_USAGE.md
+/NETWORK_PROXY_SOLUTION.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

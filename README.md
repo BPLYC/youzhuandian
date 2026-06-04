@@ -1,16 +1,44 @@
-# React + Vite
+# EV vs Gas Savings Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mobile-first calculator for US drivers comparing gasoline vehicle and EV ownership costs.
 
-Currently, two official plugins are available:
+The MVP is free and browser-only. It estimates:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- EV break-even time
+- Annual net savings
+- 5-year and 10-year cumulative savings
+- Gas vs electricity costs
+- Upfront cost impact from incentives and charger installation
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- Vite
+- ECharts
+- html2canvas
+- Cloudflare Pages-ready static build
 
-## Expanding the ESLint configuration
+## Local Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```powershell
+npm install
+npm run dev
+```
+
+Default local URL:
+
+```text
+http://localhost:5173
+```
+
+## Verification
+
+```powershell
+npm run lint
+npm run build
+```
+
+## Product Notes
+
+- This English MVP targets US users.
+- EV incentives are user-entered because federal, state, utility, and model-specific eligibility rules change frequently.

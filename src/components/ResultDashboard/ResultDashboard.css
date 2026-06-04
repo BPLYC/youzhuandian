@@ -85,6 +85,7 @@
   font-weight: 400;
   padding-left: 8px;
   border-left: 1px solid currentColor;
+  min-width: 0;
 }
 
 /* ===== 核心大数字 ===== */
@@ -109,6 +110,7 @@
   letter-spacing: 0;
   margin-bottom: 12px;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .hero-green {
@@ -133,6 +135,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .hero-saving {
@@ -140,6 +143,10 @@
   font-size: 18px;
   font-weight: 700;
   color: var(--accent-green);
+}
+
+.hero-saving.text-amber {
+  color: var(--accent-amber);
 }
 
 /* ===== 数据卡 ===== */
@@ -205,6 +212,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-sm);
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .chart-breakeven-badge {
@@ -239,7 +248,7 @@
 }
 
 .energy-icon {
-  width: 34px;
+  width: 38px;
   height: 34px;
   border-radius: var(--radius-sm);
   display: grid;
@@ -283,7 +292,7 @@
 }
 
 .energy-saving {
-  flex-shrink: 0;
+  flex: 1 1 160px;
   text-align: center;
   background: var(--accent-green-dim);
   border: 1px solid var(--accent-green-border);
@@ -301,6 +310,16 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--accent-green);
+}
+
+.energy-saving-val.text-amber {
+  color: var(--accent-amber);
+}
+
+.cost-pie-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 /* ===== 明细折叠 ===== */
@@ -375,12 +394,14 @@
   font-size: 12px;
   cursor: pointer;
   transition: all var(--transition-base);
+  min-width: 0;
+  text-align: center;
 }
 
 .action-btn span {
-  width: 24px;
+  min-width: 28px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: grid;
   place-items: center;
   background: var(--bg-raised);
@@ -443,6 +464,10 @@
   }
 
   .result-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .cost-pie-grid {
     grid-template-columns: 1fr;
   }
 
