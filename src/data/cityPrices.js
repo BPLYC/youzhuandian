@@ -1,57 +1,132 @@
-// US gas and electricity presets for the English MVP.
-// Values are practical defaults for comparison, not live market data.
+// 主要城市电价 & 油价预设数据（2024年参考值）
+// 油价：92号汽油（元/升）
+// 电价：普通居民峰电 / 谷电（元/度）
 
-export const US_PRESETS = [
+export const CITY_PRICES = [
   {
-    label: 'California',
-    fuelPrice: 4.85,
-    homeElectricityPrice: 0.31,
-    publicChargingPrice: 0.48,
+    city: '北京',
+    fuelPrice: 7.62,
+    peakElecPrice: 0.83,
+    valleyElecPrice: 0.35,
+    avgElecPrice: 0.59,
   },
   {
-    label: 'Texas',
-    fuelPrice: 3.05,
-    homeElectricityPrice: 0.15,
-    publicChargingPrice: 0.34,
+    city: '上海',
+    fuelPrice: 7.65,
+    peakElecPrice: 0.77,
+    valleyElecPrice: 0.32,
+    avgElecPrice: 0.55,
   },
   {
-    label: 'New York',
-    fuelPrice: 3.65,
-    homeElectricityPrice: 0.24,
-    publicChargingPrice: 0.42,
+    city: '广州',
+    fuelPrice: 7.58,
+    peakElecPrice: 0.88,
+    valleyElecPrice: 0.38,
+    avgElecPrice: 0.63,
   },
   {
-    label: 'Florida',
-    fuelPrice: 3.35,
-    homeElectricityPrice: 0.16,
-    publicChargingPrice: 0.36,
+    city: '深圳',
+    fuelPrice: 7.60,
+    peakElecPrice: 0.68,
+    valleyElecPrice: 0.28,
+    avgElecPrice: 0.48,
   },
   {
-    label: 'Other / manual',
-    fuelPrice: 3.50,
-    homeElectricityPrice: 0.17,
-    publicChargingPrice: 0.38,
+    city: '成都',
+    fuelPrice: 7.56,
+    peakElecPrice: 0.72,
+    valleyElecPrice: 0.35,
+    avgElecPrice: 0.54,
+  },
+  {
+    city: '杭州',
+    fuelPrice: 7.63,
+    peakElecPrice: 0.75,
+    valleyElecPrice: 0.30,
+    avgElecPrice: 0.53,
+  },
+  {
+    city: '武汉',
+    fuelPrice: 7.55,
+    peakElecPrice: 0.78,
+    valleyElecPrice: 0.38,
+    avgElecPrice: 0.58,
+  },
+  {
+    city: '西安',
+    fuelPrice: 7.52,
+    peakElecPrice: 0.70,
+    valleyElecPrice: 0.33,
+    avgElecPrice: 0.52,
+  },
+  {
+    city: '南京',
+    fuelPrice: 7.64,
+    peakElecPrice: 0.74,
+    valleyElecPrice: 0.32,
+    avgElecPrice: 0.53,
+  },
+  {
+    city: '重庆',
+    fuelPrice: 7.54,
+    peakElecPrice: 0.80,
+    valleyElecPrice: 0.40,
+    avgElecPrice: 0.60,
+  },
+  {
+    city: '天津',
+    fuelPrice: 7.61,
+    peakElecPrice: 0.80,
+    valleyElecPrice: 0.34,
+    avgElecPrice: 0.57,
+  },
+  {
+    city: '郑州',
+    fuelPrice: 7.53,
+    peakElecPrice: 0.76,
+    valleyElecPrice: 0.36,
+    avgElecPrice: 0.56,
+  },
+  {
+    city: '长沙',
+    fuelPrice: 7.57,
+    peakElecPrice: 0.74,
+    valleyElecPrice: 0.37,
+    avgElecPrice: 0.56,
+  },
+  {
+    city: '沈阳',
+    fuelPrice: 7.50,
+    peakElecPrice: 0.78,
+    valleyElecPrice: 0.36,
+    avgElecPrice: 0.57,
+  },
+  {
+    city: '其他/手动填写',
+    fuelPrice: 7.58,
+    peakElecPrice: 0.75,
+    valleyElecPrice: 0.35,
+    avgElecPrice: 0.55,
   },
 ];
 
 export const DEFAULT_VALUES = {
-  // Driving habits
-  annualMileage: 12000,      // miles/year
-  fuelEfficiency: 30,        // miles per gallon
-  drivingType: 'mixed',      // city/highway/mixed
+  // 用车习惯
+  annualMileage: 15000,        // km/年
+  fuelConsumption: 8,          // L/100km
+  drivingType: 'mixed',        // city/highway/mixed
 
-  // Energy
-  presetIndex: 4,            // Other / manual
-  fuelPrice: 3.50,           // $/gal
-  electricityPrice: 0.17,    // $/kWh
-  useHomeCharging: true,
-  evConsumption: 30,         // kWh/100 mi
+  // 能源
+  cityIndex: 14,               // 其他/手动
+  fuelPrice: 7.58,             // 元/升
+  elecPrice: 0.55,             // 元/度
+  useHomeCharger: true,        // 家用充电桩
+  evConsumption: 15,           // 度/100km
 
-  // Vehicle costs
-  gasCarPrice: 32000,
-  evCarPrice: 38000,
-  evIncentives: 7500,
-  chargerInstallCost: 1200,
-  insuranceDiff: 300,        // yearly EV insurance difference, positive = EV costs more
-  maintenanceDiff: -700,     // yearly EV maintenance difference, negative = EV costs less
+  // 购车参数
+  fuelCarPrice: 150000,        // 油车价格（元）
+  evCarPrice: 150000,          // 电车价格（元，含补贴）
+  chargerInstallCost: 3000,    // 充电桩安装费（元）
+  insuranceDiff: 500,          // 年保险差异（电车-油车，正=电贵）
+  maintenanceDiff: -2000,      // 年维保差异（电车-油车，负=电省）
 };

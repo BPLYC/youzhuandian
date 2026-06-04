@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ev-vs-gas-calculator.pages.dev/sitemap.xml
+Sitemap: https://youzhuandian.pages.dev/sitemap.xml
