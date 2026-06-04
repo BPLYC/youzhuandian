@@ -24,7 +24,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
     if (!dashboardRef.current) return;
     try {
       const canvas = await html2canvas(dashboardRef.current, {
-        backgroundColor: '#0A0F1E',
+        backgroundColor: '#050505',
         scale: 2,
         useCORS: true,
         logging: false,
@@ -60,16 +60,16 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
   const breakEvenText = formatBreakEven(breakEvenYear);
   const verdict = breakEvenYear === null
-    ? { label: '暂时不划算', color: 'amber', icon: '⚠️' }
+    ? { label: '暂时不划算', color: 'amber' }
     : breakEvenYear === 0
-    ? { label: '立即省钱', color: 'green', icon: '🎉' }
+    ? { label: '立即省钱', color: 'green' }
     : breakEvenYear <= 4
-    ? { label: '非常划算', color: 'green', icon: '🏆' }
+    ? { label: '非常划算', color: 'green' }
     : breakEvenYear <= 7
-    ? { label: '比较划算', color: 'blue', icon: '✅' }
+    ? { label: '比较划算', color: 'blue' }
     : breakEvenYear <= 10
-    ? { label: '勉强回本', color: 'blue', icon: '📊' }
-    : { label: '回本时间较长', color: 'amber', icon: '⏳' };
+    ? { label: '勉强回本', color: 'blue' }
+    : { label: '回本时间较长', color: 'amber' };
 
   return (
     <div className="result-wrapper">
@@ -78,10 +78,10 @@ export default function ResultDashboard({ result, onRecalculate }) {
         <div className="watermark">油车换电车划算吗？ · youzhuandian.app</div>
 
         <div className={`verdict-banner verdict-${verdict.color}`}>
-          <span className="verdict-icon">{verdict.icon}</span>
+          <span className="verdict-dot" aria-hidden="true" />
           <span className="verdict-label">{verdict.label}</span>
           {breakEvenYear !== null && breakEvenYear > 0 && (
-            <span className="verdict-sub">· {breakEvenText}开始省钱</span>
+            <span className="verdict-sub">{breakEvenText}开始省钱</span>
           )}
         </div>
 
@@ -123,7 +123,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
             <span>累计成本对比</span>
             {breakEvenYear !== null && breakEvenYear > 0 && breakEvenYear <= 15 && (
               <span className="chart-breakeven-badge">
-                💡 {Math.round(breakEvenYear)}年交叉
+                {Math.round(breakEvenYear)}年交叉
               </span>
             )}
           </div>
@@ -132,15 +132,15 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
         <div className="energy-compare">
           <div className="energy-item fuel">
-            <span className="energy-icon">⛽</span>
+            <span className="energy-icon">油</span>
             <div>
               <div className="energy-label">油车年油费</div>
               <div className="energy-value">{formatMoney(annualFuelCost)}</div>
             </div>
           </div>
-          <div className="energy-arrow">→</div>
+          <div className="energy-arrow">vs</div>
           <div className="energy-item ev">
-            <span className="energy-icon">🔋</span>
+            <span className="energy-icon">电</span>
             <div>
               <div className="energy-label">电车年电费</div>
               <div className="energy-value text-green">{formatMoney(annualElecCost)}</div>
@@ -185,14 +185,14 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
       {/* 操作按钮（不截图） */}
       <div className="result-actions">
-        <button id="btn-screenshot" className="action-btn action-screenshot" onClick={handleScreenshot}>
-          <span>📸</span> 截图保存
+        <button id="btn-screenshot" type="button" className="action-btn action-screenshot" onClick={handleScreenshot}>
+          <span>存</span> 截图保存
         </button>
-        <button id="btn-share" className="action-btn action-share" onClick={handleShare}>
-          <span>🔗</span> 分享给朋友
+        <button id="btn-share" type="button" className="action-btn action-share" onClick={handleShare}>
+          <span>享</span> 分享给朋友
         </button>
-        <button id="btn-recalculate" className="action-btn action-recalculate" onClick={onRecalculate}>
-          <span>🔄</span> 重新计算
+        <button id="btn-recalculate" type="button" className="action-btn action-recalculate" onClick={onRecalculate}>
+          <span>算</span> 重新计算
         </button>
       </div>
     </div>

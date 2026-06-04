@@ -1,35 +1,39 @@
 /* ============================================================
-   设计系统 — 油换电计算器
-   主题：深色科技感 + 金融理性
+   设计系统 - 油换电计算器
+   主题：车主账本 + 克制能源金融工具
    ============================================================ */
 
 :root {
-  /* 颜色 */
-  --bg-primary: #0A0F1E;
-  --bg-secondary: #0F1729;
-  --bg-card: #141E35;
-  --bg-card-hover: #1A2540;
-  --bg-overlay: rgba(10, 15, 30, 0.95);
+  /* 颜色：单色黑白，高对比金融工具感 */
+  --bg-primary: #050505;
+  --bg-secondary: #0A0A0A;
+  --bg-card: #111111;
+  --bg-card-hover: #171717;
+  --bg-raised: #1B1B1B;
+  --bg-overlay: rgba(5, 5, 5, 0.94);
 
-  --accent-green: #00D4AA;
-  --accent-green-dim: rgba(0, 212, 170, 0.15);
-  --accent-green-border: rgba(0, 212, 170, 0.3);
-  --accent-blue: #4FACFE;
-  --accent-blue-dim: rgba(79, 172, 254, 0.12);
-  --accent-amber: #FF6B35;
-  --accent-amber-dim: rgba(255, 107, 53, 0.12);
-  --accent-purple: #7C3AED;
+  --accent-green: #F4F4EF;
+  --accent-green-strong: #FFFFFF;
+  --accent-green-dim: rgba(255, 255, 255, 0.08);
+  --accent-green-border: rgba(255, 255, 255, 0.24);
+  --accent-blue: #CACACA;
+  --accent-blue-dim: rgba(202, 202, 202, 0.09);
+  --accent-amber: #9A9A9A;
+  --accent-amber-dim: rgba(154, 154, 154, 0.10);
+  --accent-violet: #FFFFFF;
 
-  --text-primary: #F0F4FF;
-  --text-secondary: #8B9ABE;
-  --text-muted: #4A5A7A;
+  --text-primary: #F4F4EF;
+  --text-secondary: #C8C8C1;
+  --text-muted: #858585;
 
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-accent: rgba(0, 212, 170, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.085);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-accent: rgba(255, 255, 255, 0.24);
 
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-glow-green: 0 0 30px rgba(0, 212, 170, 0.2);
-  --shadow-glow-blue: 0 0 30px rgba(79, 172, 254, 0.2);
+  --shadow-card: 0 18px 48px rgba(0, 0, 0, 0.34);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  --shadow-glow-green: 0 16px 32px rgba(255, 255, 255, 0.08);
+  --shadow-glow-blue: 0 14px 30px rgba(255, 255, 255, 0.06);
 
   /* 间距 */
   --space-xs: 4px;
@@ -43,7 +47,7 @@
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
   /* 字体 */
@@ -74,16 +78,19 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-primary);
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 260px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025), transparent 26%, transparent 74%, rgba(255, 255, 255, 0.018));
   color: var(--text-primary);
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -95,7 +102,7 @@ h3,
 h4 {
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 /* ============ Scrollbar ============ */
@@ -124,7 +131,7 @@ input[type="range"] {
   appearance: none;
   width: 100%;
   height: 6px;
-  background: var(--bg-card-hover);
+  background: var(--bg-raised);
   border-radius: var(--radius-full);
   outline: none;
   cursor: pointer;
@@ -137,31 +144,32 @@ input[type="range"]::-webkit-slider-thumb {
   height: 20px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
+  border: 3px solid var(--bg-primary);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.48), 0 8px 16px rgba(0, 0, 0, 0.32);
   cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 16px rgba(0, 212, 170, 0.7);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.72), 0 10px 20px rgba(0, 0, 0, 0.38);
 }
 
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  border: none;
+  border: 3px solid var(--bg-primary);
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.48), 0 8px 16px rgba(0, 0, 0, 0.32);
   cursor: pointer;
 }
 
 /* ============ Number Input ============ */
 input[type="number"] {
   font-family: var(--font-mono);
-  background: var(--bg-card-hover);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   padding: 6px 10px;
@@ -185,8 +193,8 @@ input[type="number"]:focus {
 /* ============ Select ============ */
 select {
   font-family: var(--font-sans);
-  background: var(--bg-card-hover);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   padding: 8px 12px;
@@ -196,7 +204,7 @@ select {
   cursor: pointer;
   transition: border-color var(--transition-fast);
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B9ABE' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A8A8A8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 32px;
@@ -204,6 +212,24 @@ select {
 
 select:focus {
   border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px var(--accent-green-dim);
+}
+
+button,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 3px;
+}
+
+button:active {
+  transform: translateY(1px);
 }
 
 /* ============ Utility Classes ============ */
@@ -260,18 +286,6 @@ select:focus {
   }
 }
 
-@keyframes pulse-green {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.4);
-  }
-
-  50% {
-    box-shadow: 0 0 0 8px rgba(0, 212, 170, 0);
-  }
-}
-
 @keyframes countUp {
   from {
     opacity: 0;
@@ -296,4 +310,15 @@ select:focus {
 
 .animate-fade-in {
   animation: fadeIn 0.3s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
