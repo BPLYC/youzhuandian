@@ -90,6 +90,7 @@
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .header-btn {
@@ -187,7 +188,8 @@
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.25;
 }
 
 .hero-proof-row span + span {

@@ -1,7 +1,7 @@
 // US gas and electricity presets for the Chinese-localized MVP.
 // Values are practical defaults for comparison, not live market data.
 
-export const CITY_PRICES = [
+export const US_PRESETS = [
   {
     label: '加州 California',
     fuelPrice: 4.85,
@@ -35,22 +35,23 @@ export const CITY_PRICES = [
 ];
 
 export const DEFAULT_VALUES = {
-  // 用车习惯
-  annualMileage: 15000,        // km/年
-  fuelConsumption: 8,          // L/100km
-  drivingType: 'mixed',        // city/highway/mixed
+  // Driving habits
+  annualMileage: 12000,      // miles/year
+  fuelEfficiency: 30,        // miles per gallon
+  drivingType: 'mixed',      // city/highway/mixed
 
-  // 能源
-  cityIndex: 14,               // 其他/手动
-  fuelPrice: 7.58,             // 元/升
-  elecPrice: 0.55,             // 元/度
-  useHomeCharger: true,        // 家用充电桩
-  evConsumption: 15,           // 度/100km
+  // Energy
+  presetIndex: 4,            // Other / manual
+  fuelPrice: 3.50,           // $/gal
+  electricityPrice: 0.17,    // $/kWh
+  useHomeCharging: true,
+  evConsumption: 30,         // kWh/100 mi
 
-  // 购车参数
-  fuelCarPrice: 150000,        // 油车价格（元）
-  evCarPrice: 150000,          // 电车价格（元，含补贴）
-  chargerInstallCost: 3000,    // 充电桩安装费（元）
-  insuranceDiff: 500,          // 年保险差异（电车-油车，正=电贵）
-  maintenanceDiff: -2000,      // 年维保差异（电车-油车，负=电省）
+  // Vehicle costs
+  gasCarPrice: 32000,
+  evCarPrice: 38000,
+  evIncentives: 7500,
+  chargerInstallCost: 1200,
+  insuranceDiff: 300,        // yearly EV insurance difference, positive = EV costs more
+  maintenanceDiff: -700,     // yearly EV maintenance difference, negative = EV costs less
 };

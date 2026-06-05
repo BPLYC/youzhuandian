@@ -36,7 +36,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
       link.href = url;
       link.click();
     } catch (err) {
-      console.error('截图失败', err);
+      console.error('Screenshot failed', err);
     }
   };
 
@@ -62,6 +62,9 @@ export default function ResultDashboard({ result, onRecalculate }) {
   };
 
   const breakEvenText = formatBreakEven(breakEvenYear);
+  const netSavingClass = annualNetSaving >= 0 ? 'text-green' : 'text-amber';
+  const energySavings = annualFuelCost - annualElecCost;
+  const energySavingsClass = energySavings >= 0 ? 'text-green' : 'text-amber';
   const verdict = breakEvenYear === null
     ? { label: '暂未回本', color: 'amber' }
     : breakEvenYear === 0
@@ -76,7 +79,6 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
   return (
     <div className="result-wrapper">
-      {/* 可截图区域 */}
       <div className="result-dashboard" ref={dashboardRef}>
         <div className="watermark">电车省钱计算器</div>
 
@@ -115,14 +117,14 @@ export default function ResultDashboard({ result, onRecalculate }) {
           <div className="stat-card stat-card-featured">
             <div className="stat-card-label">5 年</div>
             <div className={`stat-card-value ${saving5yr >= 0 ? 'text-green' : 'text-amber'}`}>
-              {saving5yr >= 0 ? formatMoney(saving5yr) : '-' + formatMoney(Math.abs(saving5yr))}
+              {saving5yr >= 0 ? formatMoney(saving5yr) : `-${formatMoney(Math.abs(saving5yr))}`}
             </div>
             <div className="stat-card-sub">累计变化</div>
           </div>
           <div className="stat-card">
             <div className="stat-card-label">10 年</div>
             <div className={`stat-card-value ${saving10yr >= 0 ? 'text-green' : 'text-amber'}`}>
-              {saving10yr >= 0 ? formatMoney(saving10yr) : '-' + formatMoney(Math.abs(saving10yr))}
+              {saving10yr >= 0 ? formatMoney(saving10yr) : `-${formatMoney(Math.abs(saving10yr))}`}
             </div>
             <div className="stat-card-sub">累计变化</div>
           </div>
@@ -142,7 +144,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
 
         <div className="energy-compare">
           <div className="energy-item fuel">
-            <span className="energy-icon">油</span>
+            <span className="energy-icon">G</span>
             <div>
               <div className="energy-label">汽油成本 / 年</div>
               <div className="energy-value">{formatMoney(annualFuelCost)}</div>
@@ -150,7 +152,7 @@ export default function ResultDashboard({ result, onRecalculate }) {
           </div>
           <div className="energy-arrow">vs</div>
           <div className="energy-item ev">
-            <span className="energy-icon">电</span>
+            <span className="energy-icon">EV</span>
             <div>
               <div className="energy-label">充电成本 / 年</div>
               <div className="energy-value text-green">{formatMoney(annualElecCost)}</div>
@@ -198,7 +200,6 @@ export default function ResultDashboard({ result, onRecalculate }) {
         </div>
       </div>
 
-      {/* 操作按钮（不截图） */}
       <div className="result-actions">
         <button id="btn-screenshot" type="button" className="action-btn action-screenshot" onClick={handleScreenshot}>
           <span aria-hidden="true">保存</span> 导出图片

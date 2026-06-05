@@ -1,6 +1,6 @@
 /* ============================================================
-   设计系统 - 油换电计算器
-   主题：车主账本 + 克制能源金融工具
+   Design system - EV vs Gas Savings Calculator
+   Theme: restrained consumer finance utility
    ============================================================ */
 
 :root {
@@ -35,7 +35,7 @@
   --shadow-glow-green: 0 16px 36px rgba(85, 240, 180, 0.18);
   --shadow-glow-blue: 0 14px 30px rgba(123, 167, 255, 0.16);
 
-  /* 间距 */
+  /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
@@ -43,18 +43,18 @@
   --space-xl: 32px;
   --space-2xl: 48px;
 
-  /* 圆角 */
+  /* Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-full: 9999px;
 
-  /* 字体 */
-  --font-sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Type */
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'DM Mono', 'Courier New', monospace;
 
-  /* 过渡 */
+  /* Motion */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);

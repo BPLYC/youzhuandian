@@ -23,7 +23,6 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
   const fuelData = yearlyData.map(d => d.fuelTotal);
   const evData = yearlyData.map(d => d.evTotal);
 
-  // 标注交叉点
   const markPoints = [];
   if (breakEvenYear !== null && breakEvenYear > 0 && breakEvenYear <= 15) {
     const yr = Math.round(breakEvenYear);
@@ -97,7 +96,7 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
       axisLabel: {
         color: COLORS.muted,
         fontSize: 11,
-        formatter: v => v >= 10000 ? `${(v / 10000).toFixed(0)}万` : v,
+        formatter: v => v >= 1000 ? `$${(v / 1000).toFixed(0)}k` : `$${v}`,
       },
     },
     series: [
@@ -170,9 +169,6 @@ export function BreakEvenChart({ yearlyData, breakEvenYear }) {
   );
 }
 
-/**
- * 饼图：年度成本构成对比
- */
 export function CostPieChart({ fuelBreakdown, evBreakdown }) {
   const buildItems = (data, energyLabel, energyColor) => {
     const items = [
@@ -200,7 +196,7 @@ export function CostPieChart({ fuelBreakdown, evBreakdown }) {
       borderColor: 'rgba(255, 255, 255, 0.22)',
       borderWidth: 1,
       textStyle: { color: COLORS.text, fontSize: 12 },
-      formatter: p => `${p.name}<br/>¥${p.value.toLocaleString()} (${p.percent}%)`,
+      formatter: p => `${p.name}<br/>${formatUsd(p.value)} (${p.percent}%)`,
     },
     series: [{
       type: 'pie',

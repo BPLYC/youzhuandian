@@ -5,7 +5,7 @@ import { calculate } from './utils/calculator';
 import './App.css';
 
 export default function App() {
-  const [screen, setScreen] = useState('input'); // 'input' | 'result'
+  const [screen, setScreen] = useState('input');
   const [result, setResult] = useState(null);
 
   const handleCalculate = (params) => {
@@ -21,7 +21,6 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* 顶部导航栏 */}
       <header className="app-header">
         <div className="header-inner">
           <div className="header-logo">
@@ -43,11 +42,9 @@ export default function App() {
         </div>
       </header>
 
-      {/* 主内容 */}
       <main className="app-main">
         {screen === 'input' && (
           <div className="animate-fade-in-up">
-            {/* Hero 标语 */}
             <div className="hero-tagline">
               <div className="hero-kicker">算清长期用车账</div>
               <h1>换电车到底划不划算？</h1>
@@ -73,7 +70,6 @@ export default function App() {
         )}
       </main>
 
-      {/* 底部 */}
       <footer className="app-footer">
         <p>结果仅供规划参考。实际成本会因车型、电价方案、驾驶习惯和补贴资格而变化。</p>
       </footer>
