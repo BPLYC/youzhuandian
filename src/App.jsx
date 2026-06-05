@@ -54,7 +54,6 @@ export default function App() {
                 <span>年度节省</span>
                 <span>10年走势</span>
               </div>
-              <div className="free-badge">免费使用，无需登录</div>
             </div>
             <InputPanel onCalculate={handleCalculate} />
           </div>

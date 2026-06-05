@@ -197,18 +197,6 @@
   border-left: 1px solid var(--border-subtle);
 }
 
-.free-badge {
-  display: inline-block;
-  padding: 7px 10px;
-  background: rgba(85, 240, 180, 0.11);
-  border: 1px solid rgba(85, 240, 180, 0.22);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent-green);
-  box-shadow: var(--shadow-inset);
-}
-
 /* ===== 主内容 ===== */
 .app-main {
   position: relative;
