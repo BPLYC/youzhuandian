@@ -1,33 +1,33 @@
-// US gas and electricity presets for the English MVP.
+// US gas and electricity presets for the Chinese-localized MVP.
 // Values are practical defaults for comparison, not live market data.
 
 export const US_PRESETS = [
   {
-    label: 'California',
+    label: '加州 California',
     fuelPrice: 4.85,
     homeElectricityPrice: 0.31,
     publicChargingPrice: 0.48,
   },
   {
-    label: 'Texas',
+    label: '德州 Texas',
     fuelPrice: 3.05,
     homeElectricityPrice: 0.15,
     publicChargingPrice: 0.34,
   },
   {
-    label: 'New York',
+    label: '纽约州 New York',
     fuelPrice: 3.65,
     homeElectricityPrice: 0.24,
     publicChargingPrice: 0.42,
   },
   {
-    label: 'Florida',
+    label: '佛州 Florida',
     fuelPrice: 3.35,
     homeElectricityPrice: 0.16,
     publicChargingPrice: 0.36,
   },
   {
-    label: 'Other / manual',
+    label: '其他 / 手动填写',
     fuelPrice: 3.50,
     homeElectricityPrice: 0.17,
     publicChargingPrice: 0.38,

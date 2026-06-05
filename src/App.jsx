@@ -25,7 +25,7 @@ export default function App() {
         <div className="header-inner">
           <div className="header-logo">
             <span className="logo-mark">EV</span>
-            <span className="logo-text">EV Savings</span>
+            <span className="logo-text">电车省钱计算器</span>
           </div>
           <div className="header-right">
             {screen === 'result' && (
@@ -35,7 +35,7 @@ export default function App() {
                 className="header-btn"
                 onClick={handleRecalculate}
               >
-                Recalculate
+                重新计算
               </button>
             )}
           </div>
@@ -46,15 +46,15 @@ export default function App() {
         {screen === 'input' && (
           <div className="animate-fade-in-up">
             <div className="hero-tagline">
-              <div className="hero-kicker">Run the ownership math</div>
-              <h1>Is switching to an EV worth it?</h1>
-              <p>Compare gas, electricity, incentives, and ownership costs in one clear break-even estimate.</p>
-              <div className="hero-proof-row" aria-label="Calculator outputs">
-                <span>Break-even time</span>
-                <span>Annual savings</span>
-                <span>10-year outlook</span>
+              <div className="hero-kicker">算清长期用车账</div>
+              <h1>换电车到底划不划算？</h1>
+              <p>把油费、电费、补贴、购车和养车差异放在一起，快速估算回本时间和长期节省。</p>
+              <div className="hero-proof-row" aria-label="计算结果">
+                <span>回本时间</span>
+                <span>年度节省</span>
+                <span>10年走势</span>
               </div>
-              <div className="free-badge">Free MVP calculator</div>
+              <div className="free-badge">免费使用，无需登录</div>
             </div>
             <InputPanel onCalculate={handleCalculate} />
           </div>
@@ -71,7 +71,7 @@ export default function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Estimates are for planning only. Actual costs vary by vehicle, utility plan, driving style, and incentives.</p>
+        <p>结果仅供规划参考。实际成本会因车型、电价方案、驾驶习惯和补贴资格而变化。</p>
       </footer>
     </div>
   );

@@ -1,5 +1,5 @@
 /**
- * Core cost model for the US English EV vs gas calculator.
+ * Core cost model for the Chinese UI of the US EV vs gas calculator.
  * Runs entirely in the browser.
  */
 
@@ -120,14 +120,17 @@ export function formatMoney(amount, showSign = false) {
 }
 
 export function formatBreakEven(years) {
-  if (years === null) return 'No break-even';
-  if (years === 0) return 'Day one';
-  if (years < 1) return `About ${Math.max(1, Math.round(years * 12))} mo`;
+  if (years === null) return '暂不回本';
+  if (years === 0) return '立即省钱';
+  if (years < 1) return `约 ${Math.max(1, Math.round(years * 12))} 个月`;
 
-  const y = Math.floor(years);
-  const m = Math.round((years - y) * 12);
-  const yearLabel = y === 1 ? 'year' : 'years';
+  let y = Math.floor(years);
+  let m = Math.round((years - y) * 12);
+  if (m === 12) {
+    y += 1;
+    m = 0;
+  }
 
-  if (m === 0) return `${y} ${yearLabel}`;
-  return `${y} ${yearLabel} ${m} mo`;
+  if (m === 0) return `${y} 年`;
+  return `${y} 年 ${m} 个月`;
 }

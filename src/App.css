@@ -1,11 +1,44 @@
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
   background: var(--bg-primary);
   background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.052), transparent 220px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.026), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.02));
+    radial-gradient(circle at 26% 4%, rgba(85, 240, 180, 0.14), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(246, 180, 90, 0.10), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 260px);
+  overflow: hidden;
+}
+
+.app::before {
+  content: "";
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  width: min(1180px, 100vw);
+  height: 430px;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(7, 11, 9, 0.96) 0%, rgba(7, 11, 9, 0.72) 42%, rgba(7, 11, 9, 0.88) 100%),
+    url("./assets/ev-savings-backdrop.png") right center / cover no-repeat;
+  opacity: 0.78;
+  filter: saturate(1.06);
+  mask-image: linear-gradient(180deg, black 0%, black 68%, transparent 100%);
+}
+
+.app::after {
+  content: "";
+  position: absolute;
+  top: 340px;
+  left: 0;
+  right: 0;
+  height: 260px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(7, 11, 9, 0), var(--bg-primary));
 }
 
 /* ===== 顶部导航 ===== */
@@ -13,14 +46,14 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(5, 5, 5, 0.9);
+  background: rgba(7, 11, 9, 0.74);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
   border-bottom: 1px solid var(--border-subtle);
 }
 
 .header-inner {
-  max-width: 560px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 12px var(--space-md);
   display: flex;
@@ -42,7 +75,7 @@
   display: grid;
   place-items: center;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.025)),
+    linear-gradient(145deg, rgba(85, 240, 180, 0.24), rgba(255, 255, 255, 0.025)),
     var(--bg-card);
   border: 1px solid var(--accent-green-border);
   color: var(--accent-green-strong);
@@ -70,13 +103,14 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-base), background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
 
 .header-btn:hover {
   background: var(--accent-green);
   color: var(--bg-primary);
   border-color: var(--accent-green);
+  transform: translateY(-1px);
 }
 
 .header-right {
@@ -87,9 +121,11 @@
 
 /* ===== Hero 标语 ===== */
 .hero-tagline {
+  position: relative;
+  z-index: 1;
   text-align: left;
-  padding: 30px var(--space-md) var(--space-md);
-  max-width: 560px;
+  padding: 46px var(--space-md) var(--space-lg);
+  max-width: 920px;
   margin: 0 auto;
 }
 
@@ -101,6 +137,8 @@
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .hero-kicker::before {
@@ -108,23 +146,25 @@
   width: 18px;
   height: 1px;
   background: var(--accent-green);
-  opacity: 0.62;
+  opacity: 0.9;
 }
 
 .hero-tagline h1 {
-  font-size: 32px;
+  max-width: 620px;
+  font-size: clamp(36px, 7vw, 62px);
   font-weight: 850;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: 1.04;
   text-wrap: balance;
 }
 
 .hero-tagline p {
+  max-width: 560px;
   font-size: 15px;
   color: var(--text-secondary);
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .hero-proof-row {
@@ -133,9 +173,11 @@
   gap: 0;
   margin: 0 0 14px;
   width: 100%;
-  max-width: none;
+  max-width: 560px;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
+  background: rgba(8, 12, 10, 0.42);
+  backdrop-filter: blur(12px);
 }
 
 .hero-proof-row span {
@@ -157,37 +199,59 @@
 
 .free-badge {
   display: inline-block;
-  padding: 5px 0;
-  background: transparent;
-  border: none;
-  border-radius: 0;
+  padding: 7px 10px;
+  background: rgba(85, 240, 180, 0.11);
+  border: 1px solid rgba(85, 240, 180, 0.22);
+  border-radius: var(--radius-sm);
   font-size: 13px;
   font-weight: 700;
   color: var(--accent-green);
+  box-shadow: var(--shadow-inset);
 }
 
 /* ===== 主内容 ===== */
 .app-main {
+  position: relative;
+  z-index: 1;
   flex: 1;
   padding-bottom: var(--space-xl);
 }
 
 /* ===== 底部 ===== */
 .app-footer {
+  position: relative;
+  z-index: 1;
   text-align: center;
   padding: var(--space-md);
   font-size: 11px;
   color: var(--text-muted);
   border-top: 1px solid var(--border-subtle);
+  background: rgba(7, 11, 9, 0.72);
+  backdrop-filter: blur(12px);
 }
 
 @media (min-width: 760px) {
   .hero-tagline {
-    padding-top: 36px;
+    padding-top: 58px;
+  }
+}
+
+@media (max-width: 720px) {
+  .app::before {
+    top: 54px;
+    height: 360px;
+    background:
+      linear-gradient(180deg, rgba(7, 11, 9, 0.88) 0%, rgba(7, 11, 9, 0.68) 44%, rgba(7, 11, 9, 0.94) 100%),
+      url("./assets/ev-savings-backdrop.png") center top / cover no-repeat;
+    opacity: 0.64;
+  }
+
+  .hero-tagline {
+    padding-top: 34px;
   }
 
   .hero-tagline h1 {
-    font-size: 36px;
+    max-width: 440px;
   }
 }
 
