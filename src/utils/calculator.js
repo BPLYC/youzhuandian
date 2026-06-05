@@ -1,6 +1,6 @@
 /**
- * 核心计算逻辑 — 油车 vs 电车成本对比
- * 全在浏览器端运行，无需服务器
+ * Core cost model for the Chinese UI of the US EV vs gas calculator.
+ * Runs entirely in the browser.
  */
 
 /**
@@ -173,11 +173,17 @@ export function formatMoney(amount, showSign = false) {
  * 格式化回本年数
  */
 export function formatBreakEven(years) {
-  if (years === null) return '无法回本';
+  if (years === null) return '暂不回本';
   if (years === 0) return '立即省钱';
-  if (years < 1) return `约${Math.round(years * 12)}个月`;
-  const y = Math.floor(years);
-  const m = Math.round((years - y) * 12);
-  if (m === 0) return `${y}年`;
-  return `${y}年${m}个月`;
+  if (years < 1) return `约 ${Math.max(1, Math.round(years * 12))} 个月`;
+
+  let y = Math.floor(years);
+  let m = Math.round((years - y) * 12);
+  if (m === 12) {
+    y += 1;
+    m = 0;
+  }
+
+  if (m === 0) return `${y} 年`;
+  return `${y} 年 ${m} 个月`;
 }

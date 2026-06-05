@@ -1,4 +1,6 @@
 .input-panel {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
@@ -32,7 +34,7 @@
 
 .steps-line-fill {
   height: 100%;
-  background: var(--accent-green);
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
   transition: width var(--transition-slow);
   border-radius: var(--radius-full);
 }
@@ -55,7 +57,7 @@
   height: 32px;
   border-radius: 50%;
   border: 2px solid var(--border-subtle);
-  background: var(--bg-secondary);
+  background: rgba(11, 16, 14, 0.84);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +71,7 @@
   border-color: var(--accent-green);
   background: var(--accent-green-dim);
   color: var(--accent-green);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 4px rgba(85, 240, 180, 0.10), var(--shadow-glow-green);
 }
 
 .step-item.done .step-circle {
@@ -96,7 +98,7 @@
 /* ===== 步骤卡片 ===== */
 .step-card {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 44%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
     var(--bg-card);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-xl);
@@ -105,7 +107,10 @@
   flex-direction: column;
   gap: var(--space-lg);
   min-width: 0;
-  box-shadow: var(--shadow-inset);
+  box-shadow: var(--shadow-card), var(--shadow-inset);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  animation: floatIn 0.52s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .step-card-header {
@@ -117,15 +122,17 @@
 }
 
 .step-icon {
-  width: 48px;
+  width: 52px;
   height: 48px;
   border-radius: var(--radius-md);
   display: grid;
   place-items: center;
-  color: var(--text-primary);
-  background: var(--bg-raised);
-  border: 1px solid var(--border-strong);
-  font-size: 13px;
+  color: var(--accent-green);
+  background:
+    linear-gradient(145deg, rgba(85, 240, 180, 0.16), rgba(255, 255, 255, 0.035)),
+    var(--bg-raised);
+  border: 1px solid var(--accent-green-border);
+  font-size: 12px;
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -160,7 +167,7 @@
 .field-label {
   font-size: 14px;
   font-weight: 650;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   min-width: 0;
 }
 
@@ -168,7 +175,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--bg-raised);
+  background: rgba(7, 11, 9, 0.66);
   border-radius: var(--radius-sm);
   padding: 2px 6px 2px 2px;
   border: 1px solid var(--border-strong);
@@ -217,7 +224,7 @@
   top: 50%;
   left: 0;
   height: 6px;
-  background: var(--accent-green);
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
   border-radius: var(--radius-full);
   transform: translateY(-50%);
   pointer-events: none;
@@ -234,7 +241,7 @@
 .toggle-group {
   display: flex;
   gap: var(--space-sm);
-  background: var(--bg-raised);
+  background: rgba(7, 11, 9, 0.58);
   border-radius: var(--radius-md);
   padding: 4px;
   border: 1px solid var(--border-subtle);
@@ -252,15 +259,20 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-base), background var(--transition-base), color var(--transition-base);
   white-space: nowrap;
 }
 
 .toggle-btn.active {
-  background: var(--text-primary);
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-strong));
   color: var(--bg-primary);
   font-weight: 700;
-  box-shadow: none;
+  box-shadow: 0 8px 18px rgba(85, 240, 180, 0.15);
+}
+
+.toggle-btn:hover {
+  color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
 /* ===== 导航按钮 ===== */
@@ -270,6 +282,10 @@
   position: sticky;
   bottom: 12px;
   z-index: 5;
+  padding: 8px;
+  margin-inline: -8px;
+  background: linear-gradient(180deg, rgba(7, 11, 9, 0), rgba(7, 11, 9, 0.88) 42%);
+  backdrop-filter: blur(8px);
 }
 
 .btn-secondary {
@@ -278,7 +294,7 @@
   padding: 14px 20px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  background: rgba(17, 17, 17, 0.92);
+  background: rgba(16, 23, 20, 0.9);
   color: var(--text-secondary);
   font-family: var(--font-sans);
   font-size: 15px;
@@ -299,7 +315,7 @@
   padding: 14px 24px;
   border: none;
   border-radius: var(--radius-md);
-  background: var(--accent-green);
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-strong));
   color: var(--bg-primary);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -320,7 +336,7 @@
   padding: 16px 24px;
   border: none;
   border-radius: var(--radius-lg);
-  background: var(--accent-green);
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-strong));
   color: var(--bg-primary);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -332,12 +348,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 28px rgba(85, 240, 180, 0.16);
+  animation: softPulse 3.4s ease-in-out infinite;
 }
 
 .btn-calculate:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 34px rgba(85, 240, 180, 0.24);
 }
 
 .btn-calculate-icon {

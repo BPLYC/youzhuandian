@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CITY_PRICES, DEFAULT_VALUES } from '../../data/cityPrices';
 import './InputPanel.css';
 
-const STEPS = ['用车习惯', '能源价格', '购车参数'];
+const STEPS = ['驾驶情况', '能源价格', '车辆成本'];
 
 function SliderField({ label, value, min, max, step, unit, onChange, hint }) {
   const pct = ((value - min) / (max - min)) * 100;
@@ -126,43 +126,43 @@ export default function InputPanel({ onCalculate }) {
         {step === 0 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">🚗</span>
+              <span className="step-icon">里程</span>
               <div>
-                <h2>您的用车习惯</h2>
-                <p>告诉我您平时怎么开车</p>
+                <h2>你的驾驶情况</h2>
+                <p>先输入每年开多少，以及现在车辆的油耗表现。</p>
               </div>
             </div>
 
             <SliderField
-              label="年行驶里程"
+              label="年度行驶里程"
               value={form.annualMileage}
               min={3000}
-              max={60000}
-              step={1000}
-              unit="km"
+              max={40000}
+              step={500}
+              unit="英里/年"
               onChange={set('annualMileage')}
-              hint={`约每天 ${Math.round(form.annualMileage / 365)} km`}
+              hint={`约每天 ${Math.round(form.annualMileage / 365)} 英里`}
             />
 
             <SliderField
-              label="当前油耗"
-              value={form.fuelConsumption}
-              min={4}
-              max={18}
-              step={0.5}
-              unit="L/100km"
-              onChange={set('fuelConsumption')}
-              hint="不确定可查看行驶证或车辆参数"
+              label="当前油车油耗"
+              value={form.fuelEfficiency}
+              min={10}
+              max={60}
+              step={1}
+              unit="MPG"
+              onChange={set('fuelEfficiency')}
+              hint="如果知道真实平均油耗，请优先填写真实数据。"
             />
 
             <ToggleField
-              label="主要用途"
+              label="主要驾驶场景"
               value={form.drivingType}
               onChange={set('drivingType')}
               options={[
-                { value: 'city', label: '城市通勤' },
-                { value: 'mixed', label: '均衡' },
-                { value: 'highway', label: '长途为主' },
+                { value: 'city', label: '城市' },
+                { value: 'mixed', label: '混合' },
+                { value: 'highway', label: '高速' },
               ]}
             />
           </div>
@@ -172,15 +172,15 @@ export default function InputPanel({ onCalculate }) {
         {step === 1 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">⚡</span>
+              <span className="step-icon">费率</span>
               <div>
                 <h2>能源价格</h2>
-                <p>选择城市自动填入参考价格</p>
+                <p>选择一个地区预设，再按你的实际账单微调。</p>
               </div>
             </div>
 
             <div className="field-group">
-              <span className="field-label">所在城市</span>
+              <span className="field-label">地区预设</span>
               <select
                 value={form.cityIndex}
                 onChange={e => handleCityChange(Number(e.target.value))}
@@ -192,7 +192,7 @@ export default function InputPanel({ onCalculate }) {
             </div>
 
             <SliderField
-              label="当前油价（92号）"
+              label="汽油价格"
               value={form.fuelPrice}
               min={5}
               max={12}
@@ -203,34 +203,34 @@ export default function InputPanel({ onCalculate }) {
 
             <ToggleField
               label="充电方式"
-              value={form.useHomeCharger}
-              onChange={handleChargerToggle}
+              value={form.useHomeCharging}
+              onChange={handleChargingToggle}
               options={[
-                { value: true, label: '家用充电桩（谷电）' },
+                { value: true, label: '家充' },
                 { value: false, label: '公共快充' },
               ]}
             />
 
             <SliderField
-              label={form.useHomeCharger ? '谷电电价' : '综合电价'}
-              value={form.elecPrice}
-              min={0.2}
-              max={1.5}
+              label={form.useHomeCharging ? '家用电价' : '公共充电价格'}
+              value={form.electricityPrice}
+              min={0.08}
+              max={0.65}
               step={0.01}
-              unit="元/度"
-              onChange={set('elecPrice')}
-              hint={form.useHomeCharger ? '深夜充电谷电价，省钱最大化' : '公共充电桩综合价格'}
+              unit="$/kWh"
+              onChange={set('electricityPrice')}
+              hint={form.useHomeCharging ? '可参考电费账单或分时电价。' : '可填写你常用快充站的平均价格。'}
             />
 
             <SliderField
-              label="电车百公里电耗"
+              label="电车能耗"
               value={form.evConsumption}
               min={8}
               max={30}
               step={0.5}
               unit="度/100km"
               onChange={set('evConsumption')}
-              hint="一般家用电车 12-20 度，可查目标车型参数"
+              hint="多数现代电车约为每 100 英里 25-35 kWh。"
             />
           </div>
         )}
@@ -239,26 +239,25 @@ export default function InputPanel({ onCalculate }) {
         {step === 2 && (
           <div className="step-card">
             <div className="step-card-header">
-              <span className="step-icon">💰</span>
+              <span className="step-icon">成本</span>
               <div>
-                <h2>购车参数</h2>
-                <p>填入您关注的车型价格</p>
+                <h2>车辆与持有成本</h2>
+                <p>把购车差价、补贴、保险和保养差异一并算进去。</p>
               </div>
             </div>
 
             <SliderField
-              label="当前油车价格"
-              value={form.fuelCarPrice}
-              min={50000}
-              max={500000}
-              step={5000}
-              unit="元"
-              onChange={set('fuelCarPrice')}
-              hint={`+购置税 ≈ ${Math.round((form.fuelCarPrice / 1.13) * 0.1 / 100) * 100} 元`}
+              label="油车购车价格"
+              value={form.gasCarPrice}
+              min={10000}
+              max={90000}
+              step={1000}
+              unit="$"
+              onChange={set('gasCarPrice')}
             />
 
             <SliderField
-              label="目标电车价格（含补贴）"
+              label="电车购车价格"
               value={form.evCarPrice}
               min={50000}
               max={500000}
@@ -269,36 +268,47 @@ export default function InputPanel({ onCalculate }) {
             />
 
             <SliderField
-              label="充电桩安装费"
+              label="电车补贴 / 税收抵免"
+              value={form.evIncentives}
+              min={0}
+              max={15000}
+              step={500}
+              unit="$"
+              onChange={set('evIncentives')}
+              hint="填写你预计可获得的联邦、州、能源公司或经销商补贴。"
+            />
+
+            <SliderField
+              label="家用充电桩安装"
               value={form.chargerInstallCost}
               min={0}
               max={10000}
               step={500}
               unit="元"
               onChange={set('chargerInstallCost')}
-              hint="公寓无法安装可设为 0"
+              hint="如果主要依赖公共充电，可设为 0。"
             />
 
             <SliderField
-              label="年保险差异"
+              label="年度保险差异"
               value={form.insuranceDiff}
               min={-3000}
               max={3000}
               step={100}
               unit="元/年"
               onChange={set('insuranceDiff')}
-              hint={form.insuranceDiff >= 0 ? `电车保险每年贵 ${form.insuranceDiff} 元` : `电车保险每年省 ${Math.abs(form.insuranceDiff)} 元`}
+              hint={form.insuranceDiff >= 0 ? `电车保险每年约多 $${form.insuranceDiff}。` : `电车保险每年约省 $${Math.abs(form.insuranceDiff)}。`}
             />
 
             <SliderField
-              label="年维保差异"
+              label="年度保养差异"
               value={form.maintenanceDiff}
               min={-8000}
               max={2000}
               step={100}
               unit="元/年"
               onChange={set('maintenanceDiff')}
-              hint={form.maintenanceDiff <= 0 ? `电车维保每年省 ${Math.abs(form.maintenanceDiff)} 元（无机油等）` : `电车维保每年贵 ${form.maintenanceDiff} 元`}
+              hint={form.maintenanceDiff <= 0 ? `电车保养每年约省 $${Math.abs(form.maintenanceDiff)}。` : `电车保养每年约多 $${form.maintenanceDiff}。`}
             />
           </div>
         )}
@@ -312,7 +322,7 @@ export default function InputPanel({ onCalculate }) {
             className="btn-secondary"
             onClick={() => setStep(s => s - 1)}
           >
-            ← 上一步
+            上一步
           </button>
         )}
         {canNext && (
@@ -321,7 +331,7 @@ export default function InputPanel({ onCalculate }) {
             className="btn-primary"
             onClick={() => setStep(s => s + 1)}
           >
-            下一步 →
+            下一步
           </button>
         )}
         {isLast && (
@@ -330,8 +340,8 @@ export default function InputPanel({ onCalculate }) {
             className="btn-calculate"
             onClick={handleSubmit}
           >
-            <span className="btn-calculate-icon">⚡</span>
-            立即计算回本年数
+            <span className="btn-calculate-icon">$</span>
+            计算电车节省
           </button>
         )}
       </div>
